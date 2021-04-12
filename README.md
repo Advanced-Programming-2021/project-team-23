@@ -2,6 +2,6 @@
 ## Team --
 
 ### Team Members:
-- Student1 99109036
+- آرین زمانی 99109036
 - Student2 99100000
 - Student3 99100000
