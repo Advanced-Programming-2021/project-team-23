@@ -53,6 +53,7 @@ public class DuelMenu extends GameController {
         String input;
         Matcher matcher;
         while((!(input = scanner.nextLine()).equals("next phase")) && (!isDuelEnded())){
+            //System.out.println(1);
             matcher = getCommandMatcher(input, "select ([a-z0-9 -]+)");
             if(matcher.matches()) select(matcher);
             else if(input.matches("summon")) summon();

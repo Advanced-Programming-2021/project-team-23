@@ -35,7 +35,7 @@ public class RegisterMenu implements IMenu, ICheatCode {
         pattern = Pattern.compile("^menu show-current$");
         matcher = pattern.matcher(command);
         if (matcher.find()) {
-            System.out.println("Register Menu");
+            System.out.println("register menu");
             return;
         }
 
@@ -93,7 +93,7 @@ public class RegisterMenu implements IMenu, ICheatCode {
             if (matcher.group(i) != null) {
                 if (matcher.group(i).startsWith("p")) {
                     password = matcher.group(i);
-                    password = password.replaceAll("password ", " ");
+                    password = password.replaceAll("password ", "");
                     password = password.replaceAll("p ", "");
                 } else {
                     username = matcher.group(i);
@@ -106,6 +106,7 @@ public class RegisterMenu implements IMenu, ICheatCode {
 
         boolean checkUser = verifyInformation(username, password);
         if (checkUser) {
+            System.out.println("logged in successfully");
             User loggedInUser = getUserInstanceForLogin(username, password);
             MainMenu mainMenu = new MainMenu(loggedInUser);
             mainMenu.run();

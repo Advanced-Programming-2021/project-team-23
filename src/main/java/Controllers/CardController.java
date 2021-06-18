@@ -147,7 +147,7 @@ public class CardController {
         ArrayList<Card> deckZone = board.getDeckZone();
         deckZone.remove(card);
         ArrayList<Card> cardsInHand = board.getCardsInHand();
-        cardsInHand.set(cardsInHand.size(), card);
+        cardsInHand.add(card);
         card.setPlace("hand_" + (cardsInHand.size() + 1));
     }
 
@@ -165,7 +165,7 @@ public class CardController {
                 }
             }
         } else {
-            arrayList2.set(size, card);
+            arrayList2.add(card);
             card.setPlace("hand_" + (size + 1));
         }
     }

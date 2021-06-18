@@ -15,6 +15,10 @@ public class ScoreBoardMenu implements IMenu , ICheatCode {
 
     @Override
     public void processCommand(String command) throws IOException {
+        if (command.matches("^menu show-current$")) {
+            System.out.println("scoreboard menu");
+            return;
+        }
         if(command.equals("scoreboard show")){
             ArrayList<User> users = sortUsers();
             int rank = 1;

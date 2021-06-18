@@ -17,6 +17,10 @@ public class ShopMenu implements IMenu , ICheatCode {
 
     @Override
     public void processCommand(String command) {
+        if (command.matches("^menu show-current$")) {
+            System.out.println("shop menu");
+            return;
+        }
         Matcher matcher;
         matcher = getCommandMatcher(command, "shop buy (.+)");
         if(matcher.matches()){

@@ -23,7 +23,7 @@ public class Deck {
     }
 
     public static Deck getDeckByName(String deckName) throws IOException {
-        File users = new File("D:\\project-team23\\src\\main\\resources\\users");
+        File users = new File(User.projectAddress + "\\src\\main\\resources\\users");
         File[] filesList = users.listFiles();
         for(File file : filesList) {
             Gson gson = new Gson();

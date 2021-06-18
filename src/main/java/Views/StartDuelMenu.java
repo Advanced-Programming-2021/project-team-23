@@ -13,8 +13,12 @@ public class StartDuelMenu implements IMenu, ICheatCode {
 
     @Override
     public void processCommand(String command) throws IOException {
+        if (command.matches("^menu show-current$")) {
+            System.out.println("duel menu");
+            return;
+        }
         Matcher matcher;
-        matcher = getCommandMatcher(command, "duel new second-player ([\\S]+) round ([\\d]+)");
+        matcher = getCommandMatcher(command, "duel new second-player (.+) rounds ([\\d]+)");
         if(matcher.find()){
             String username = matcher.group(1);
             int rounds = Integer.parseInt(matcher.group(2));
@@ -37,6 +41,7 @@ public class StartDuelMenu implements IMenu, ICheatCode {
             }
             GameController gameController = new GameController();
             gameController.runGameController(MainMenu.currentUser, user, rounds);
+            return;
         }
         matcher = getCommandMatcher(command, "duel new ai rounds ([\\d]+)");
         if(matcher.find()){
@@ -53,7 +58,9 @@ public class StartDuelMenu implements IMenu, ICheatCode {
             gameController.isAI = true;
             User aiUser = AI.getAIUser();
             gameController.runGameController(MainMenu.currentUser, aiUser, rounds);
+            return;
         }
+        System.out.println("invalid command");
     }
 
     @Override

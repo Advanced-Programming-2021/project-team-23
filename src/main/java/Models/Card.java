@@ -61,7 +61,7 @@ public class Card {
         canAnyoneAttack = true;
         canBeDestroyed = !name.equals("Marshmallon");
         try {
-            FileReader fileReader = new FileReader("D:\\project-team23\\src\\main\\resources\\Monster.csv");
+            FileReader fileReader = new FileReader(User.projectAddress + "\\src\\main\\resources\\Monster.csv");
             CSVReader csvReader = new CSVReader(fileReader);
             String[] row;
             while((row = csvReader.readNext()) != null){
@@ -87,7 +87,7 @@ public class Card {
         }
 
         try {
-            FileReader fileReader = new FileReader("D:\\project-team23\\src\\main\\resources\\SpellTrap.csv");
+            FileReader fileReader = new FileReader(User.projectAddress + "\\src\\main\\resources\\SpellTrap.csv");
             CSVReader csvReader = new CSVReader(fileReader);
             String[] row;
             while((row = csvReader.readNext()) != null){
@@ -119,12 +119,12 @@ public class Card {
         FileReader fileReader;
         String[] row;
         try {
-            fileReader = new FileReader("D:\\project-team23\\src\\main\\resources\\Monster.csv");
+            fileReader = new FileReader(User.projectAddress + "\\src\\main\\resources\\Monster.csv");
             CSVReader csvReader = new CSVReader(fileReader);
             while((row = csvReader.readNext()) != null){
                 if(name.equals(row[0])) return new Card(row[0]);
             }
-            fileReader = new FileReader("D:\\project-team23\\src\\main\\resources\\SpellTrap.csv");
+            fileReader = new FileReader(User.projectAddress + "\\src\\main\\resources\\SpellTrap.csv");
             csvReader = new CSVReader(fileReader);
             while((row = csvReader.readNext()) != null){
                 if(name.equals(row[0])) return new Card(row[0]);

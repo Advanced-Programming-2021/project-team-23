@@ -25,6 +25,9 @@ public class DeckMenu implements IMenu , ICheatCode {
     }
 
     public String processDeckCommands(String command, User user) throws Exception {
+        if (command.matches("^menu show-current$")) {
+            return ("shop menu");
+        }
         Matcher matcher;
         matcher = getCommandMatcher(command, "deck create (.+)");
         if(matcher.matches()){
@@ -56,6 +59,7 @@ public class DeckMenu implements IMenu , ICheatCode {
             }
             deck.isActive = true;
             user.activeDeck = deck;
+            User.setUserInFile(user);
             return ("deck activated successfully!");
         }
         matcher = getCommandMatcher(command, "deck add-card card (.+) deck (.+)");

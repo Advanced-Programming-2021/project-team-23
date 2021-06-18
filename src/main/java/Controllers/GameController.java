@@ -62,6 +62,7 @@ public class GameController {
             isDamageToPlayersCalculated = false;
             phaseNumber = 1;
             if(!isAI) {
+                //System.out.println(2);
                 phaseController(1);
                 if (isGameEnded()) {
                     if (numberOfRounds == 3) printWinnerOfMatch();

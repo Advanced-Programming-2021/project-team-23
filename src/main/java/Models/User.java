@@ -12,6 +12,8 @@ import java.util.List;
 
 public class User{
 
+    public static String projectAddress = "D:\\project-team-23";
+
     public String username;
     public String password;
     public String nickname;
@@ -36,7 +38,7 @@ public class User{
     }
 
     public static void setUserInFile(User user) throws FileNotFoundException {
-        File file = new File("D:\\project-team23\\src\\main\\resources\\users\\" + user.username + ".json");
+        File file = new File(User.projectAddress + "\\src\\main\\resources\\users\\" + user.username + ".json");
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.serializeNulls();
         Gson gson = gsonBuilder.create();
@@ -50,7 +52,7 @@ public class User{
 
     public static ArrayList<User> getAllUsers() throws IOException {
         ArrayList<User> allUsers = new ArrayList<>();
-        File users = new File("D:\\project-team23\\src\\main\\resources\\users");
+        File users = new File(User.projectAddress + "\\src\\main\\resources\\users");
         File[] filesList = users.listFiles();
         Gson gson = new Gson();
         for(File file : filesList) {
@@ -60,7 +62,7 @@ public class User{
     }
 
     public static User getUserByUsername(String username) throws IOException {
-        File users = new File("D:\\project-team23\\src\\main\\resources\\users");
+        File users = new File(User.projectAddress + "\\src\\main\\resources\\users");
         File[] filesList = users.listFiles();
         for(File file : filesList) {
             if(file.getName().startsWith(username)){
@@ -72,7 +74,7 @@ public class User{
     }
 
     public static User getUserByNickname(String nickname) throws IOException {
-        File users = new File("D:\\project-team23\\src\\main\\resources\\users");
+        File users = new File(User.projectAddress + "\\src\\main\\resources\\users");
         File[] filesList = users.listFiles();
         for(File file : filesList) {
             Gson gson = new Gson();
@@ -83,7 +85,7 @@ public class User{
     }
 
     public static User getUserByUsernameAndPassword(String username, String password) throws IOException {
-        File users = new File("D:\\project-team23\\src\\main\\resources\\users");
+        File users = new File(User.projectAddress + "\\src\\main\\resources\\users");
         File[] filesList = users.listFiles();
         for(File file : filesList) {
             Gson gson = new Gson();
@@ -165,12 +167,12 @@ public class User{
         FileReader fileReader;
         String[] row;
         try {
-            fileReader = new FileReader("D:\\project-team23\\src\\main\\resources\\Monster.csv");
+            fileReader = new FileReader(User.projectAddress + "\\src\\main\\resources\\Monster.csv");
             CSVReader csvReader = new CSVReader(fileReader);
             while((row = csvReader.readNext()) != null){
                 if(!(row[0].equals("Name"))) cardsInNoDeck.add(new Card(row[0]));
             }
-            fileReader = new FileReader("D:\\project-team23\\src\\main\\resources\\SpellTrap.csv");
+            fileReader = new FileReader(User.projectAddress + "\\src\\main\\resources\\SpellTrap.csv");
             csvReader = new CSVReader(fileReader);
             while((row = csvReader.readNext()) != null){
                 if(!(row[0].equals("Name"))) cardsInNoDeck.add(new Card(row[0]));
