@@ -15,19 +15,19 @@ public class GameController {
     public int currentRound;  // 1 or 2 or 3
     public int[] lpOfWinners;   // add number after each round
     public int[] winners;  // contains 0 or 1 as playerNumber // add number after each round
-    private int winner; // 0 or 1 // winner of whole match
+    public int winner; // 0 or 1 // winner of whole match
 
     public int phaseNumber;  // 1 to 6
 
-    public User[] users = new User[2];
-    public Board[] boards = new Board[2];
-    public int[] lp = new int[2];
+    public User[] users;
+    public Board[] boards;
+    public int[] lp;
 
     public int currentPlayer;  // 0 or 1
     public Card selectedCard;
-    private boolean isCardSummonedOrSetInTurn;
+    public boolean isCardSummonedOrSetInTurn;
 
-    private boolean isDamageToPlayersCalculated; // check this before calculating // reset to false after each use
+    public boolean isDamageToPlayersCalculated; // check this before calculating // reset to false after each use
 
     public DuelMenu duelMenu;
 
@@ -44,14 +44,23 @@ public class GameController {
     public boolean isAI;  // set before calling runGameController
     public AI ai;
 
-    public void runGameController(User user1, User user2, int numberOfRounds){
-        if(isAI) ai = new AI();
+    public GameController(User user1, User user2, int numberOfRounds){
         this.numberOfRounds = numberOfRounds;
+        chain = new ArrayList<>();
+        lastCards = new Card[2];
+        lastActions = new String[2];
+        users = new User[2];
+        boards = new Board[2];
+        lp = new int[2];
         users[0] = user1;
         users[1] = user2;
         lpOfWinners = new int[]{-1, -1, -1};
         winners = new int[]{-1, -1, -1};
-        duelMenu = new DuelMenu();
+        duelMenu = new DuelMenu(this);
+    }
+
+    public void runGameController(User user1, User user2, int numberOfRounds){
+        if(isAI) ai = new AI(this);
         for(int i = 1; i <= numberOfRounds; i++) {
             boards[0] = new Board(user1);
             boards[1] = new Board(user2);
@@ -62,7 +71,6 @@ public class GameController {
             isDamageToPlayersCalculated = false;
             phaseNumber = 1;
             if(!isAI) {
-                //System.out.println(2);
                 phaseController(1);
                 if (isGameEnded()) {
                     if (numberOfRounds == 3) printWinnerOfMatch();
@@ -145,14 +153,14 @@ public class GameController {
         // some cards in boards should be called like scanners of both players and MessengerOfPeace
         for(int i = 0; i < 2; i++){
             for(Card card: getBoard(i).getMonsters()){
-                if(card.getName().equals("Scanner")){
+                if(card != null && card.getName().equals("Scanner")){
                     Action.runActionForCard(this, card, null);
                 }
             }
         }
 
         for(Card card: getBoard(currentPlayer).getSpellsAndTraps()){
-            if(card.getName().equals("Messenger of peace")) {
+            if(card != null && card.getName().equals("Messenger of peace")) {
                 Action.runActionForCard(this, card, null);
             }
         }
@@ -169,41 +177,39 @@ public class GameController {
                 if(j == 2) arrayList = getBoard(i).getGraveyard();
                 if(j == 3) arrayList = getBoard(i).getFieldZone();
                 for (Card card : arrayList) {
-                    card.setIsEffectUsedInTurn(false);
-                    card.setAttackedInTurn(false);
-                    card.setPositionChangedInTurn(false);
+                    if(card != null) {
+                        card.setIsEffectUsedInTurn(false);
+                        card.setAttackedInTurn(false);
+                        card.setPositionChangedInTurn(false);
+                    }
                 }
             }
         }
         for(Card card: getBoard(currentPlayer).getSpellsAndTraps()){
-            if(card.isEffectActive()) {
+            if(card != null && card.isEffectActive()) {
                 card.increaseNumberOfTurnsOfOpponentBeingActive();
             }
         }
         for(Card card: getBoard(currentPlayer).getGraveyard()){
-            card.setNumberOfTurnsOfOpponentBeingActive(0);
+            if(card != null) card.setNumberOfTurnsOfOpponentBeingActive(0);
         }
 
         for(Card card: getBoard(currentPlayer).getSpellsAndTraps()){
-            if(card.getName().equals("Swords of Revealing Light")) {
+            if(card != null && card.getName().equals("Swords of Revealing Light")) {
                 Action.runActionForCard(this, card, null);
             }
         }
 
         for(Card card: getBoard(currentPlayer).getSpellsAndTraps()){
-            if(card.getName().equals("Change of Heart")) {
+            if(card != null && card.getName().equals("Change of Heart")) {
                 Action.runActionForCard(this, card, null);
             }
         }
         for(Card card: getBoard(1 - currentPlayer).getSpellsAndTraps()){
-            if(card.getName().equals("Change of Heart")) {
+            if(card != null && card.getName().equals("Change of Heart")) {
                 Action.runActionForCard(this, card, null);
             }
         }
-    }
-
-    public int getNumberOfRounds() {
-        return numberOfRounds;
     }
 
     public int getPhaseNumber() {
@@ -344,7 +350,7 @@ public class GameController {
                 if(j == 0) arrayList = getBoard(currentPlayer + i).getMonsters();
                 else arrayList = getBoard(currentPlayer + i).getSpellsAndTraps();
                 for (Card card : arrayList) {
-                    if ((card.getSpeed() > 1 && (lastCards[(currentPlayer + i + 1) % 2] == null || card.getSpeed() >= lastCards[(currentPlayer + i + 1) % 2].getSpeed())) &&
+                    if (card != null && (card.getSpeed() > 1 && (lastCards[(currentPlayer + i + 1) % 2] == null || card.getSpeed() >= lastCards[(currentPlayer + i + 1) % 2].getSpeed())) &&
                             Action.canEffectBeActivatedForCard(this, card, lastCards[(currentPlayer + i + 1) % 2])) {
                         if (isAI || GameView.doesUserWantToUseEffectOfCard(card)) {
                             isPlayerDone[(currentPlayer + i + 1) % 2] = false;

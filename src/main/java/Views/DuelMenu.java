@@ -14,10 +14,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Scanner;
 
-public class DuelMenu extends GameController {
+public class DuelMenu{
 
-    static Scanner scanner = new Scanner(System.in);
+    public GameController gameController;
 
+    public DuelMenu(GameController gameController){
+        this.gameController = gameController;
+    }
+
+    public static Scanner scanner = new Scanner(System.in);
 
     public static void printPhaseName(int newPhaseNumber){
         if(newPhaseNumber == 1){
@@ -45,15 +50,14 @@ public class DuelMenu extends GameController {
     }
 
     public void printCurrentPlayerTurn(){
-        String nickname = getUser(getCurrentPlayer()).getNickname();
+        String nickname = gameController.getUser(gameController.getCurrentPlayer()).getNickname();
         System.out.println("it is " + nickname + "'s turn");
     }
 
     public void getCommands(){
         String input;
         Matcher matcher;
-        while((!(input = scanner.nextLine()).equals("next phase")) && (!isDuelEnded())){
-            //System.out.println(1);
+        while((!(input = scanner.nextLine()).equals("next phase")) && (!gameController.isDuelEnded())){
             matcher = getCommandMatcher(input, "select ([a-z0-9 -]+)");
             if(matcher.matches()) select(matcher);
             else if(input.matches("summon")) summon();
@@ -87,17 +91,17 @@ public class DuelMenu extends GameController {
     }
 
     private void surrender() {
-        winners[currentRound - 1] = 1 - currentPlayer;
-        printWinnerOfDuel();
-        if(isGameEnded()){
-            if(numberOfRounds == 3) printWinnerOfMatch();
-            setAwards();
+        gameController.winners[gameController.currentRound - 1] = 1 - gameController.currentPlayer;
+        gameController.printWinnerOfDuel();
+        if(gameController.isGameEnded()){
+            if(gameController.numberOfRounds == 3) gameController.printWinnerOfMatch();
+            gameController.setAwards();
         }
     }
 
 
     public void select(Matcher inputMatcher){
-        CommandController commandController = new CommandController();
+        CommandController commandController = new CommandController(gameController);
         try {
             String message = commandController.select(inputMatcher);
             System.out.println(message);
@@ -109,7 +113,7 @@ public class DuelMenu extends GameController {
 
 
     public void summon(){
-        CommandController commandController = new CommandController();
+        CommandController commandController = new CommandController(gameController);
         try {
             String message = commandController.summon();
             System.out.println(message);
@@ -121,7 +125,7 @@ public class DuelMenu extends GameController {
 
 
     public void set(){
-        CommandController commandController = new CommandController();
+        CommandController commandController = new CommandController(gameController);
         try {
             String message = commandController.set();
             System.out.println(message);
@@ -132,7 +136,7 @@ public class DuelMenu extends GameController {
     }
 
     public void setMonster(){
-        CommandController commandController = new CommandController();
+        CommandController commandController = new CommandController(gameController);
         try {
             String message = commandController.setMonster();
             System.out.println(message);
@@ -143,7 +147,7 @@ public class DuelMenu extends GameController {
     }
 
     public void setSpellOrTrap(){
-        CommandController commandController = new CommandController();
+        CommandController commandController = new CommandController(gameController);
         try {
             String message = commandController.setSpellOrTrap();
             System.out.println(message);
@@ -155,7 +159,7 @@ public class DuelMenu extends GameController {
 
 
     public void changePosition(String position){
-        CommandController commandController = new CommandController();
+        CommandController commandController = new CommandController(gameController);
         try {
             String message = commandController.changePosition(position);
             System.out.println(message);
@@ -167,7 +171,7 @@ public class DuelMenu extends GameController {
 
 
     public void flipSummon(){
-        CommandController commandController = new CommandController();
+        CommandController commandController = new CommandController(gameController);
         try {
             String message = commandController.flipSummon();
             System.out.println(message);
@@ -179,7 +183,7 @@ public class DuelMenu extends GameController {
 
 
     public void attack(String number){
-        CommandController commandController = new CommandController();
+        CommandController commandController = new CommandController(gameController);
         try {
             String message = commandController.attack(number);
             System.out.println(message);
@@ -190,7 +194,7 @@ public class DuelMenu extends GameController {
     }
 
     public void directAttack(){
-        CommandController commandController = new CommandController();
+        CommandController commandController = new CommandController(gameController);
         try {
             String message = commandController.directAttack();
             System.out.println(message);
@@ -202,7 +206,7 @@ public class DuelMenu extends GameController {
 
 
     public void activateSpell(){
-        CommandController commandController = new CommandController();
+        CommandController commandController = new CommandController(gameController);
         try {
             String message = commandController.activateSpell();
             System.out.println(message);
@@ -213,12 +217,12 @@ public class DuelMenu extends GameController {
     }
 
     public void ritualSummon(Card  ritualSpell){
-        Board board = getBoard(getCurrentPlayer());
-        if(!AdvancedRitualArt.canEffectBeActivatedForCard(this, ritualSpell, null)) return;
+        Board board = gameController.getBoard(gameController.getCurrentPlayer());
+        if(!AdvancedRitualArt.canEffectBeActivatedForCard(gameController, ritualSpell, null)) return;
         while(true){
-            if(!(getSelectedCard().getType().startsWith("Monster") &&
-                    getSelectedCard().getCardType().equals("Ritual") &&
-                    AdvancedRitualArt.canRitualSummonWithMonster(getSelectedCard(), board))){
+            if(!(gameController.getSelectedCard().getType().startsWith("Monster") &&
+                    gameController.getSelectedCard().getCardType().equals("Ritual") &&
+                    AdvancedRitualArt.canRitualSummonWithMonster(gameController.getSelectedCard(), board))){
                 System.out.println("please select a new ritual monster card");
                 String input = scanner.nextLine();
                 Matcher matcher = getCommandMatcher(input, "select ([a-z0-9 -]+)");
@@ -229,7 +233,7 @@ public class DuelMenu extends GameController {
             String input = scanner.nextLine();
             if(!input.matches("summon")) continue;
 
-            Card ritualMonster = getSelectedCard();
+            Card ritualMonster = gameController.getSelectedCard();
             ArrayList<Card> monsters;
             while(true) {
                 monsters = GameView.getCardsByAddressFromZone(board, 1, "some");
@@ -245,18 +249,18 @@ public class DuelMenu extends GameController {
             }
             break;
         }
-        Action.runActionForCard(this, ritualSpell, null);
+        Action.runActionForCard(gameController, ritualSpell, null);
         System.out.println("summoned successfully");
     }
 
 
     public void showGraveyard(){
-        ArrayList<Card> graveyard = getBoard(getCurrentPlayer()).getGraveyard();
+        ArrayList<Card> graveyard = gameController.getBoard(gameController.getCurrentPlayer()).getGraveyard();
         if(graveyard.size() == 0) {
             System.out.println("graveyard is empty");
         } else {
             for(Card card : graveyard){
-                System.out.println(card.getName() + " : " + card.getDescription());
+                System.out.println(card.getName() + ": " + card.getDescription());
             }
         }
         while(!(scanner.nextLine()).equals("back")){
@@ -265,12 +269,12 @@ public class DuelMenu extends GameController {
     }
 
     public void showSelectedCard(){
-        if(getSelectedCard() == null){
+        if(gameController.getSelectedCard() == null){
             System.out.println("no card is selected yet");
             return;
         }
-        Card card = getSelectedCard();
-        if(CardController.boardContainsCard(getBoard(getCurrentPlayer() + 1), card) &&
+        Card card = gameController.getSelectedCard();
+        if(CardController.boardContainsCard(gameController.getBoard(gameController.getCurrentPlayer() + 1), card) &&
         card.getMode().contains("H")){
             System.out.println("card is not visible");
             return;
@@ -290,11 +294,11 @@ public class DuelMenu extends GameController {
     }
 
     public void printBoards(){
-        Board myBoard = getBoard(currentPlayer);
-        Board opponentBoard = getBoard(currentPlayer + 1);
+        Board myBoard = gameController.getBoard(gameController.currentPlayer);
+        Board opponentBoard = gameController.getBoard(gameController.currentPlayer + 1);
         ArrayList<Card> cards;
         int handSize;
-        System.out.println(users[1 - currentPlayer].getNickname() + " : " + lp[1 - currentPlayer]);
+        System.out.println(gameController.users[1 - gameController.currentPlayer].getNickname() + ": " + gameController.lp[1 - gameController.currentPlayer]);
         handSize = opponentBoard.getCardsInHand().size();
         String s = "  ";
         System.out.print("  " + s);
@@ -306,28 +310,28 @@ public class DuelMenu extends GameController {
         System.out.print("  " + s);
         cards = opponentBoard.getSpellsAndTraps();
         if(cards.get(3) != null) System.out.print(cards.get(3).getMode() + " " + s);
-        else System.out.println("E " + s);
+        else System.out.print("E " + s);
         if(cards.get(1) != null) System.out.print(cards.get(1).getMode() + " " + s);
-        else System.out.println("E " + s);
+        else System.out.print("E " + s);
         if(cards.get(0) != null) System.out.print(cards.get(0).getMode() + " " + s);
-        else System.out.println("E " + s);
+        else System.out.print("E " + s);
         if(cards.get(2) != null) System.out.print(cards.get(2).getMode() + " " + s);
-        else System.out.println("E " + s);
+        else System.out.print("E " + s);
         if(cards.get(4) != null) System.out.print(cards.get(4).getMode() + " " + s);
-        else System.out.println("E " + s);
+        else System.out.print("E " + s);
         System.out.println();
         System.out.print("  " + s);
         cards = opponentBoard.getMonsters();
         if(cards.get(3) != null) System.out.print(cards.get(3).getMode() + s);
-        else System.out.println("E " + s);
+        else System.out.print("E " + s);
         if(cards.get(1) != null) System.out.print(cards.get(1).getMode() + s);
-        else System.out.println("E " + s);
+        else System.out.print("E " + s);
         if(cards.get(0) != null) System.out.print(cards.get(0).getMode() + s);
-        else System.out.println("E " + s);
+        else System.out.print("E " + s);
         if(cards.get(2) != null) System.out.print(cards.get(2).getMode() + s);
-        else System.out.println("E " + s);
+        else System.out.print("E " + s);
         if(cards.get(4) != null) System.out.print(cards.get(4).getMode() + s);
-        else System.out.println("E " + s);
+        else System.out.print("E " + s);
         System.out.println();
         System.out.print(opponentBoard.getGraveyard().size());
         System.out.print("                       ");
@@ -345,28 +349,28 @@ public class DuelMenu extends GameController {
         System.out.print("  " + s);
         cards = myBoard.getMonsters();
         if(cards.get(4) != null) System.out.print(cards.get(4).getMode() + s);
-        else System.out.println("E " + s);
+        else System.out.print("E " + s);
         if(cards.get(2) != null) System.out.print(cards.get(2).getMode() + s);
-        else System.out.println("E " + s);
+        else System.out.print("E " + s);
         if(cards.get(0) != null) System.out.print(cards.get(0).getMode() + s);
-        else System.out.println("E " + s);
+        else System.out.print("E " + s);
         if(cards.get(1) != null) System.out.print(cards.get(1).getMode() + s);
-        else System.out.println("E " + s);
+        else System.out.print("E " + s);
         if(cards.get(3) != null) System.out.print(cards.get(3).getMode() + s);
-        else System.out.println("E " + s);
+        else System.out.print("E " + s);
         System.out.println();
         System.out.print("  " + s);
         cards = myBoard.getSpellsAndTraps();
         if(cards.get(4) != null) System.out.print(cards.get(4).getMode() + " " + s);
-        else System.out.println("E " + s);
+        else System.out.print("E " + s);
         if(cards.get(2) != null) System.out.print(cards.get(2).getMode() + " " + s);
-        else System.out.println("E " + s);
+        else System.out.print("E " + s);
         if(cards.get(0) != null) System.out.print(cards.get(0).getMode() + " " + s);
-        else System.out.println("E " + s);
+        else System.out.print("E " + s);
         if(cards.get(1) != null) System.out.print(cards.get(1).getMode() + " " + s);
-        else System.out.println("E " + s);
+        else System.out.print("E " + s);
         if(cards.get(3) != null) System.out.print(cards.get(3).getMode() + " " + s);
-        else System.out.println("E " + s);
+        else System.out.print("E " + s);
         System.out.println();
         System.out.print("                        ");
         System.out.print(myBoard.getDeckZone().size());
@@ -377,7 +381,7 @@ public class DuelMenu extends GameController {
             System.out.print("c " + s);
         }
         System.out.println();
-        System.out.println(users[currentPlayer].getNickname() + " : " + lp[currentPlayer]);
+        System.out.println(gameController.users[gameController.currentPlayer].getNickname() + ": " + gameController.lp[gameController.currentPlayer]);
     }
 
 

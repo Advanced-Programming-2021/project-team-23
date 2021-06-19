@@ -90,7 +90,7 @@ public class CardController {
     public static boolean arrayListContainsMonster(ArrayList<Card> arrayList){
         if(arrayList.size()==0) return false;
         for(Card card : arrayList){
-            if(card.getType().startsWith("Monster")) return true;
+            if(card.isMonster()) return true;
         }
         return false;
     }
@@ -145,28 +145,22 @@ public class CardController {
         // only call when you are sure hand is not full
         if(card == null) return;
         ArrayList<Card> deckZone = board.getDeckZone();
-        deckZone.remove(card);
         ArrayList<Card> cardsInHand = board.getCardsInHand();
-        cardsInHand.add(card);
-        card.setPlace("hand_" + (cardsInHand.size() + 1));
+        moveCardFromFirstArrayToSecondArray(card, deckZone, cardsInHand, "hand");
     }
 
     public static void moveCardFromFirstArrayToSecondArray(Card card, ArrayList<Card> arrayList1, ArrayList<Card> arrayList2, String newZoneNumber){
         // only call when you are sure arrayList2 is not full
+        if(card == null) return;
         if(arrayList2.contains(card)) return;
-        arrayList1.remove(card);
+        if(arrayList1.contains(card)) arrayList1.set(arrayList1.indexOf(card), null);
         int size = arrayList2.size();
-        if(!newZoneNumber.equals("hand")) {
-            for (int i = 0; i < size; i++) {
-                if (arrayList2.get(i) == null) {
-                    arrayList2.set(i, card);
-                    card.setPlace(newZoneNumber + "_" + (i + 1));
-                    if(newZoneNumber.equals("5")) card.setPlace("5");
-                }
+        for (int i = 0; i < size; i++) {
+            if (arrayList2.get(i) == null) {
+                arrayList2.set(i, card);
+                card.setPlace(newZoneNumber + "_" + (i + 1));
+                if(newZoneNumber.equals("5")) card.setPlace("5");
             }
-        } else {
-            arrayList2.add(card);
-            card.setPlace("hand_" + (size + 1));
         }
     }
 
@@ -193,7 +187,7 @@ public class CardController {
 
     public static Card getAMonsterFromGraveyard(Board board){
         for(Card card: board.getGraveyard()){
-            if(card.getType().startsWith("Monster")) return card;
+            if(card.isMonster()) return card;
         }
         return null;
     }

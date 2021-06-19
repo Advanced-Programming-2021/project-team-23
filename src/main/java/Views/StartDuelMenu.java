@@ -39,7 +39,7 @@ public class StartDuelMenu implements IMenu, ICheatCode {
                 System.out.println("number of rounds is not supported");
                 return;
             }
-            GameController gameController = new GameController();
+            GameController gameController = new GameController(MainMenu.currentUser, user, rounds);
             gameController.runGameController(MainMenu.currentUser, user, rounds);
             return;
         }
@@ -54,9 +54,9 @@ public class StartDuelMenu implements IMenu, ICheatCode {
                 System.out.println("number of rounds is not supported");
                 return;
             }
-            GameController gameController = new GameController();
-            gameController.isAI = true;
             User aiUser = AI.getAIUser();
+            GameController gameController = new GameController(MainMenu.currentUser, aiUser, rounds);
+            gameController.isAI = true;
             gameController.runGameController(MainMenu.currentUser, aiUser, rounds);
             return;
         }

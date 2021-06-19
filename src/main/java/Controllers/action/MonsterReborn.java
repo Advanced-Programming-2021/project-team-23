@@ -23,6 +23,7 @@ public class MonsterReborn extends Action{
             ArrayList<Card> graveyard;
             if(myBoard.getGraveyard().contains(card)) graveyard = myBoard.getGraveyard();
             else graveyard = opponentBoard.getGraveyard();
+            graveyard.remove(card);
             CardController.moveCardFromFirstArrayToSecondArray(card, graveyard, myBoard.getMonsters(), "1");
             card.setMode("OO");
         }
@@ -40,10 +41,10 @@ public class MonsterReborn extends Action{
         ArrayList<Card> myGraveyard = myBoard.getGraveyard();
         ArrayList<Card> opponentGraveyard = opponentBoard.getGraveyard();
         for(Card card : myGraveyard){
-            if(card.getType().startsWith("Monster")) return true;
+            if(card.isMonster()) return true;
         }
         for(Card card : opponentGraveyard){
-            if(card.getType().startsWith("Monster")) return true;
+            if(card.isMonster()) return true;
         }
         return false;
     }

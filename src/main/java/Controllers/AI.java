@@ -6,80 +6,84 @@ import Models.User;
 import Views.DuelMenu;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class AI extends GameController{
+public class AI{
+
+    public GameController gameController;
+
+    public AI(GameController gameController){
+        this.gameController = gameController;
+    }
 
     public void playAITurn(int newPhaseNumber){
         DuelMenu.printPhaseName(newPhaseNumber);
         if(newPhaseNumber == 1){
-            if(boards[currentPlayer].getDeckZone().size() == 0){
-                lpOfWinners[currentRound - 1] = getLp(1 - currentPlayer);
-                winners[currentRound - 1] = 1 - currentPlayer;
-                printWinnerOfDuel();
+            if(gameController.boards[gameController.currentPlayer].getDeckZone().size() == 0){
+                gameController.lpOfWinners[gameController.currentRound - 1] = gameController.getLp(1 - gameController.currentPlayer);
+                gameController.winners[gameController.currentRound - 1] = 1 - gameController.currentPlayer;
+                gameController.printWinnerOfDuel();
                 return;
             } else {
-                if(boards[currentPlayer].canAnyCardBeChosenForThisBoardInDrawPhase()) {
-                    Card card = boards[currentPlayer].getCardByPlace("4");
-                    CardController.addCardToHandFromDeck(boards[currentPlayer], card);
+                if(gameController.boards[gameController.currentPlayer].canAnyCardBeChosenForThisBoardInDrawPhase()) {
+                    Card card = gameController.boards[gameController.currentPlayer].getCardByPlace("4");
+                    CardController.addCardToHandFromDeck(gameController.boards[gameController.currentPlayer], card);
                     DuelMenu.printSuccessfulAddingCardInDrawPhase(card);
                 }
-                phaseNumber++;
+                gameController.phaseNumber++;
             }
         }
         if(newPhaseNumber == 2){
-            callSomeCardsInStandbyPhase();
-            phaseNumber++;
+            gameController.callSomeCardsInStandbyPhase();
+            gameController.phaseNumber++;
         }
         if(newPhaseNumber == 3){
             //print board (also after each action)
-            duelMenu.printBoards();
+            gameController.duelMenu.printBoards();
             setOrSummon();
-            phaseNumber++;
+            gameController.phaseNumber++;
         }
         if(newPhaseNumber == 4){
             //print board (also after each action)
-            duelMenu.printBoards();
+            gameController.duelMenu.printBoards();
             attackCards();
-            phaseNumber++;
+            gameController.phaseNumber++;
         }
         if(newPhaseNumber == 5){
             //print board (also after each action)
-            duelMenu.printBoards();
+            gameController.duelMenu.printBoards();
             setOrSummon();
-            phaseNumber++;
+            gameController.phaseNumber++;
         }
         if(newPhaseNumber == 6){
-            currentPlayer = 1 - currentPlayer;
-            duelMenu.printCurrentPlayerTurn();
-            resetSomeVariablesInEndOfTheTurn();
-            phaseNumber = 1;
+            gameController.currentPlayer = 1 - gameController.currentPlayer;
+            gameController.duelMenu.printCurrentPlayerTurn();
+            gameController.resetSomeVariablesInEndOfTheTurn();
+            gameController.phaseNumber = 1;
         }
-        if (isDuelEnded()) {
-            printWinnerOfDuel();
+        if (gameController.isDuelEnded()) {
+            gameController.printWinnerOfDuel();
             return;
         }
-        if(phaseNumber == 1) return;
-        playAITurn(phaseNumber);
+        if(gameController.phaseNumber == 1) return;
+        playAITurn(gameController.phaseNumber);
     }
 
 
     private void attackCards(){
-        CommandController commandController = new CommandController();
-        ArrayList<Card> monsters = boards[currentPlayer].getMonsters();
+        CommandController commandController = new CommandController(gameController);
+        List<Card> monsters = gameController.boards[gameController.currentPlayer].getMonsters().stream().filter(Objects::nonNull).collect(Collectors.toList());
         sortMonsters(monsters);
         List<Card> opponentMonsters;
         for(int i = 0; i < 2; i++) {
-            if(i == 0) opponentMonsters = boards[1 - currentPlayer].getMonsters().stream().filter(Objects::nonNull).filter(e -> !(e.getMode().contains("H"))).collect(Collectors.toList());
-            else opponentMonsters = boards[1 - currentPlayer].getMonsters().stream().filter(Objects::nonNull).filter(e -> (e.getMode().contains("H"))).collect(Collectors.toList());
+            if(i == 0) opponentMonsters = gameController.boards[1 - gameController.currentPlayer].getMonsters().stream().filter(Objects::nonNull).filter(e -> !(e.getMode().contains("H"))).collect(Collectors.toList());
+            else opponentMonsters = gameController.boards[1 - gameController.currentPlayer].getMonsters().stream().filter(Objects::nonNull).filter(e -> (e.getMode().contains("H"))).collect(Collectors.toList());
             for (Card monster : monsters) {
+                gameController.selectedCard = monster;
                 for (Card opponentMonster : opponentMonsters) {
-                    if ((opponentMonster.getMode().equals("OO") && monster.getAttack() > opponentMonster.getAttack()) ||
-                            (opponentMonster.getMode().startsWith("D") && monster.getAttack() > opponentMonster.getDefense())) {
+                    if (opponentMonster != null && ((opponentMonster.getMode().equals("OO") && monster.getAttack() > opponentMonster.getAttack()) ||
+                            (opponentMonster.getMode().startsWith("D") && monster.getAttack() > opponentMonster.getDefense()))) {
                         String position = opponentMonster.getPlace().substring(2);
                         try {
                             commandController.attack(position);
@@ -91,13 +95,11 @@ public class AI extends GameController{
         }
     }
 
-    private void sortMonsters(ArrayList<Card> monsters){
+    private void sortMonsters(List<Card> monsters){
         for(int i = 0; i < monsters.size() - 1; i++){
             for(int j = i + 1; j < monsters.size(); j++){
                 if(monsters.get(j).getAttack() > monsters.get(i).getAttack()){
-                    Card tempI = monsters.get(i);
-                    monsters.set(i, monsters.get(j));
-                    monsters.set(j, tempI);
+                    Collections.swap(monsters, i, j);
                 }
             }
         }
@@ -105,10 +107,11 @@ public class AI extends GameController{
 
 
     private void setOrSummon() {
-        CommandController commandController = new CommandController();
-        selectMonsterFromHand();
-        if(selectedCard.getAttack() > selectedCard.getDefense() &&
-        selectedCard.getAttack() >= 800){
+        CommandController commandController = new CommandController(gameController);
+        Card card = selectMonsterFromHand();
+        if(card == null) return;
+        if(gameController.selectedCard.getAttack() > gameController.selectedCard.getDefense() &&
+                gameController.selectedCard.getAttack() >= 800){
             try { commandController.summon(); } catch (Exception e) { }
         } else {
             try { commandController.set(); } catch (Exception e) { }
@@ -118,8 +121,8 @@ public class AI extends GameController{
     }
 
     private Card selectMonsterFromHand() {
-        Card attackMonster = getHighestAttackMonster(boards[currentPlayer].getCardsInHand());
-        Card defenseMonster = getHighestDefenseMonster(boards[currentPlayer].getCardsInHand());
+        Card attackMonster = getHighestAttackMonster(gameController.boards[gameController.currentPlayer].getCardsInHand().stream().filter(Objects::nonNull).collect(Collectors.toList()));
+        Card defenseMonster = getHighestDefenseMonster(gameController.boards[gameController.currentPlayer].getCardsInHand().stream().filter(Objects::nonNull).collect(Collectors.toList()));
         Card selected;
         if (attackMonster == null && defenseMonster == null) {
             return null;
@@ -134,25 +137,25 @@ public class AI extends GameController{
                 selected = defenseMonster;
             }
         }
-        selectedCard = selected;
+        gameController.selectedCard = selected;
         return selected;
     }
 
     private Card selectSpellOrTrapFromHand() {
         Card selected = null;
-        for(Card card: boards[currentPlayer].getCardsInHand()){
+        for(Card card: gameController.boards[gameController.currentPlayer].getCardsInHand()){
             if(!card.getType().startsWith("Monster")) selected = card;
         }
-        selectedCard = selected;
+        gameController.selectedCard = selected;
         return selected;
     }
 
 
-    public static Card getHighestAttackMonster(ArrayList<Card> arrayList){
+    public static Card getHighestAttackMonster(List<Card> arrayList){
         int maxAttack = 0;
         Card bestCard = null;
         for(Card card: arrayList){
-            if(card.getAttack() > maxAttack){
+            if(card.isMonster() && card.getAttack() > maxAttack){
                 bestCard = card;
                 maxAttack = card.getAttack();
             }
@@ -160,11 +163,11 @@ public class AI extends GameController{
         return bestCard;
     }
 
-    public static Card getHighestDefenseMonster(ArrayList<Card> arrayList){
+    public static Card getHighestDefenseMonster(List<Card> arrayList){
         int maxDefense = 0;
         Card bestCard = null;
         for(Card card: arrayList){
-            if(card.getAttack() > maxDefense){
+            if(card.isMonster() && card.getAttack() > maxDefense){
                 bestCard = card;
                 maxDefense = card.getAttack();
             }
@@ -173,10 +176,11 @@ public class AI extends GameController{
     }
 
     public static Card getLowestAttackMonster(ArrayList<Card> arrayList){
-        int minAttack = arrayList.get(0).getAttack();
-        Card bestCard = arrayList.get(0);
+        if(!CardController.arrayListContainsMonster(arrayList)) return null;
+        int minAttack = -1;
+        Card bestCard = null;
         for(Card card: arrayList){
-            if(card.getAttack() < minAttack){
+            if(card.isMonster() && (minAttack == -1 || card.getAttack() < minAttack)){
                 bestCard = card;
                 minAttack = card.getAttack();
             }

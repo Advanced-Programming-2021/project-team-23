@@ -21,6 +21,13 @@ public class Board {
 
     public Board(User user){
         this.user = user;
+        for(int i = 0; i < 5; i++){
+            monsters.add(null);
+            spellsAndTraps.add(null);
+            cardsInHand.add(null);
+        }
+        cardsInHand.add(null);
+        fieldZone.add(null);
         // add cards to deckZone
         ArrayList<Card> mainDeck = user.activeDeck.mainDeck;
         for(Card card: mainDeck){
@@ -31,7 +38,7 @@ public class Board {
         for(int i = 0; i < 5; i++){
             Card card = deckZone.get(i);
             deckZone.remove(card);
-            cardsInHand.add(card);
+            cardsInHand.set(i, card);
         }
         canAnyTrapBeActivated = true;
         canMonstersAttack = true;

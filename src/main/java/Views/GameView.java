@@ -175,9 +175,9 @@ public class GameView {
     }
 
     public static boolean doesPlayerWantToSetCardInDefensiveMode(){
-        System.out.println("how do you like to set your card ? defensive or attacking ?");
+        System.out.println("how do you like to set your card ? defensive(d) or attacking(a) ?");
         String input = scanner.nextLine();
-        return (input.startsWith("d") || input.startsWith("D"));
+        return (input.startsWith("d"));
     }
 
     public static boolean cardsOfArrayListAreAllNull(ArrayList<Card> arrayList) {

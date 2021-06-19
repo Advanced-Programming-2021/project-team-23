@@ -38,9 +38,16 @@ public class Texchanger extends Action {
                 }
             } else {
                 ArrayList<Card> arrayList = new ArrayList<>();
-                if(zone.equals("3")) arrayList = myBoard.getGraveyard();
-                if(zone.equals("4")) arrayList = myBoard.getDeckZone();
+                if(zone.equals("3")) {
+                    arrayList = myBoard.getGraveyard();
+                    arrayList.remove(monster);
+                }
+                if(zone.equals("4")) {
+                    arrayList = myBoard.getDeckZone();
+                    arrayList.remove(monster);
+                }
                 if(zone.equals("hand")) arrayList = myBoard.getCardsInHand();
+
                 CardController.moveCardFromFirstArrayToSecondArray(monster, arrayList, myBoard.getMonsters(), "1");
                 monster.setMode("OO");
                 break;
