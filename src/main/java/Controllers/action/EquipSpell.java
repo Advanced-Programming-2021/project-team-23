@@ -39,6 +39,7 @@ public class EquipSpell extends Action{
     }
 
     public void runActionOfUnitedWeStand(GameController gameController, Card equippedCard, Card myCard){
+        if(equippedCard == null) return;
         setBoards(gameController, myCard);
         int numberOfFaceUpMonsters = getNumberOfFaceUpMonstersInMonsterZone(myBoard);
         equippedCard.increaseAttack(800 * numberOfFaceUpMonsters);
@@ -57,6 +58,7 @@ public class EquipSpell extends Action{
     }
 
     public void runActionOfMagnumShield(Card equippedCard){
+        if(equippedCard == null) return;
         if(equippedCard.getMonsterType().equals("Warrior")){
             if(equippedCard.getMode().startsWith("O")){
                 equippedCard.increaseAttack(equippedCard.getDefense());

@@ -56,7 +56,7 @@ public class FieldSpell extends Action{
     public int getNumberOfMonstersInArrayList(ArrayList<Card> arrayList){
         int counter = 0;
         for(Card card : arrayList){
-            if(card.getType().startsWith("Monster")){
+            if(card != null && card.isMonster()){
                 counter++;
             }
         }

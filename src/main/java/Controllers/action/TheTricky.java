@@ -38,6 +38,7 @@ public class TheTricky extends Action {
         return myCard.getPlace().startsWith("hand") &&
                 myBoard.getCardsInHand().size() > 1 &&
                 gameController.lastCards[myNumber] == myCard &&
+                gameController.lastActions[myNumber] != null &&
                 gameController.lastActions[myNumber].equals("summon") &&
                 opponentCard == null;
     }

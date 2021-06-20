@@ -24,7 +24,9 @@ public class TrapHole extends Action{
     @Override
     public boolean canEffectBeActivated(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
-        return opponentCard.getAttack() >= 1000 &&
+        return opponentCard != null &&
+                opponentCard.getAttack() >= 1000 &&
+                gameController.lastActions[1-myNumber] != null &&
                 (gameController.lastActions[1-myNumber].equals("summon") || gameController.lastActions[1-myNumber].equals("flipSummon"))
                 && (!myCard.getPlace().startsWith("hand"));
     }

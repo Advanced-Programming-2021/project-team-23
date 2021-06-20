@@ -31,6 +31,8 @@ public class MagicJammer extends Action{
         setBoards(gameController, myCard);
         ArrayList<Card> cardsInHand = myBoard.getCardsInHand();
         if(CardController.cardsOfArrayListAreAllNull(cardsInHand)) return false;
-        return gameController.lastActions[1-myNumber].equals("activateSpell") && (!myCard.getPlace().startsWith("hand"));
+        return gameController.lastActions[1-myNumber] != null &&
+                gameController.lastActions[1-myNumber].equals("activateSpell") &&
+                (!myCard.getPlace().startsWith("hand"));
     }
 }

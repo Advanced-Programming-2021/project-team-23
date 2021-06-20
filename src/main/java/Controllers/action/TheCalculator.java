@@ -34,7 +34,7 @@ public class TheCalculator extends Action{
         int sum = 0;
         ArrayList<Card> monsters = board.getMonsters();
         for(Card monster : monsters){
-            if(monster.getMode().endsWith("O")) {
+            if(monster != null && monster.getMode().endsWith("O")) {
                 sum += monster.getLevel();
             }
         }

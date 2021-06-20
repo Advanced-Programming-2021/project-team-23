@@ -12,12 +12,10 @@ public class Terraforming extends Action{
     @Override
     public void runFirstAction(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
-        if(canEffectBeActivated(gameController, myCard, opponentCard)) {
-            ArrayList<Card> deckZone = myBoard.getDeckZone();
-            for(Card card : deckZone){
-                if(card.getType().startsWith("Spell_Field")) {
-                    CardController.addCardToHandFromDeck(myBoard, card);
-                }
+        ArrayList<Card> deckZone = myBoard.getDeckZone();
+        for(Card card : deckZone){
+            if(card != null && card.getType().startsWith("Spell_Field")) {
+                CardController.addCardToHandFromDeck(myBoard, card);
             }
         }
     }
@@ -34,7 +32,7 @@ public class Terraforming extends Action{
         if(CardController.arrayListOfCardsIsFull(cardsInHand, 6)) return false;
         ArrayList<Card> deckZone = myBoard.getDeckZone();
         for(Card card : deckZone){
-            if(card.getType().startsWith("Spell_Field")) return true;
+            if(card != null && card.getType().startsWith("Spell_Field")) return true;
         }
         return false;
     }

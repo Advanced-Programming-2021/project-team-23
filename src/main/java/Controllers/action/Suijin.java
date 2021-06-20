@@ -26,6 +26,8 @@ public class Suijin extends Action{
     @Override
     public boolean canEffectBeActivated(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
-        return gameController.lastActions[1-myNumber].equals("attack");
+        return gameController.lastActions[1-myNumber] != null &&
+                gameController.lastActions[1-myNumber].equals("attack") &&
+                opponentCard != null;
     }
 }

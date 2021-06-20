@@ -46,6 +46,7 @@ public class CardController {
 
 
     public static void moveCardToGraveyard(Board board, Card card) {
+        if(card == null) return;
         String place = card.getPlace();
         if (!place.startsWith("3")) {
             if (place.startsWith("1") || place.startsWith("2")) {
@@ -97,7 +98,7 @@ public class CardController {
 
     public static boolean arrayListContainsMonsterWithType(ArrayList<Card> arrayList, String type){
         for(Card card : arrayList){
-            if(card.getType().startsWith("Monster") && card.getMonsterType().equals(type)){
+            if(card != null && card.getType().startsWith("Monster") && card.getMonsterType().equals(type)){
                 return true;
             }
         }
@@ -106,7 +107,7 @@ public class CardController {
 
     public static boolean arrayListContainsCardWithName(ArrayList<Card> arrayList, String name){
         for(Card card : arrayList){
-            if(card.getName().equals(name)) return true;
+            if(card != null && card.getName().equals(name)) return true;
         }
         return false;
     }
@@ -146,6 +147,7 @@ public class CardController {
         if(card == null) return;
         ArrayList<Card> deckZone = board.getDeckZone();
         ArrayList<Card> cardsInHand = board.getCardsInHand();
+        deckZone.remove(card);
         moveCardFromFirstArrayToSecondArray(card, deckZone, cardsInHand, "hand");
     }
 
@@ -160,6 +162,7 @@ public class CardController {
                 arrayList2.set(i, card);
                 card.setPlace(newZoneNumber + "_" + (i + 1));
                 if(newZoneNumber.equals("5")) card.setPlace("5");
+                return;
             }
         }
     }
@@ -187,7 +190,7 @@ public class CardController {
 
     public static Card getAMonsterFromGraveyard(Board board){
         for(Card card: board.getGraveyard()){
-            if(card.isMonster()) return card;
+            if(card != null && card.isMonster()) return card;
         }
         return null;
     }

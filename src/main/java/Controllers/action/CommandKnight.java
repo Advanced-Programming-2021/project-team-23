@@ -58,11 +58,8 @@ public class CommandKnight extends Action {
     }
 
     public ArrayList<Card> increaseAttackInArrayList(ArrayList<Card> array, int amount) {
-        int size = array.size();
-        for (int i = 0; i < size; i++) {
-            Card card = array.get(i);
-            if(card.getType().startsWith("Monster")) card.increaseAttack(amount);
-            array.set(i, card);
+        for (Card card : array) {
+            if (card != null && card.isMonster()) card.increaseAttack(amount);
         }
         return array;
     }

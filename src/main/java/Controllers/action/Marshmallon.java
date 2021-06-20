@@ -26,7 +26,7 @@ public class Marshmallon extends Action {
     @Override
     public boolean canEffectBeActivated(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
-        return (!myCard.getPlace().startsWith("hand"));
+        return (!myCard.getPlace().startsWith("hand")) && opponentCard != null;
     }
 }
 

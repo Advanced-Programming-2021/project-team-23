@@ -17,7 +17,7 @@ public class  Terratiger extends Action{
 
         ArrayList<Card> cardsInHand = myBoard.getCardsInHand();
         for(Card card : cardsInHand){
-            if(card.getType().startsWith("Monster") && card.getLevel() <= 4){
+            if(card != null && card.getType().startsWith("Monster") && card.getLevel() <= 4){
                 CardController.moveCardFromFirstArrayToSecondArray(card, cardsInHand, myBoard.getMonsters(), "1");
                 card.setMode("DO");
             }
@@ -37,6 +37,7 @@ public class  Terratiger extends Action{
             return false;
         }
         return gameController.lastCards[myNumber] == myCard &&
+                gameController.lastActions[myNumber] != null &&
                 gameController.lastActions[myNumber].equals("summon") &&
                 (!myCard.getPlace().startsWith("hand")) &&
                 opponentCard == null;
@@ -45,7 +46,7 @@ public class  Terratiger extends Action{
     public boolean suitableMonsterExistsInHand(Board board){
         ArrayList<Card> cardsInHand = board.getCardsInHand();
         for(Card card : cardsInHand){
-            if(card.getType().startsWith("Monster") && card.getLevel() <= 4){
+            if(card != null && card.getType().startsWith("Monster") && card.getLevel() <= 4){
                 return true;
             }
         }

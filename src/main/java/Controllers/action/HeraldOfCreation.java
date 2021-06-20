@@ -16,10 +16,6 @@ public class HeraldOfCreation extends Action{
     public void runFirstAction(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
 
-        if((!myCard.getPlace().startsWith("1")) ||
-                myCard.isEffectUsedInTurn() ||
-                myBoard.getCardsInHand().size() == 0) return;
-
         if(!gameController.isAI && !GameView.doesUserWantToUseEffectOfCard(myCard)) return;
 
         Card card = getACardFromGraveyardWithLeastLevel(myBoard, 7);
@@ -47,10 +43,14 @@ public class HeraldOfCreation extends Action{
     @Override
     public boolean canEffectBeActivated(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
-        if(!(gameController.lastCards[myNumber] == myCard && (!myCard.getPlace().startsWith("hand")) &&
+        if((!myCard.getPlace().startsWith("1")) ||
+                myCard.isEffectUsedInTurn() ||
+                myBoard.getCardsInHand().size() == 0 ||
+                getACardFromGraveyardWithLeastLevel(myBoard, 7) == null) return false;
+        if(!(gameController.lastCards[myNumber] == myCard && (!myCard.getPlace().startsWith("hand")) && gameController.lastActions[myNumber] != null &&
                 (gameController.lastActions[myNumber].equals("summon")||gameController.lastActions[myNumber].equals("flipSummon")))) return false;
         for(Card card : myBoard.getGraveyard()){
-            if(card.getType().startsWith("Monster") && card.getLevel() > 6 && opponentCard == null) return true;
+            if(card != null && card.isMonster() && card.getLevel() > 6 && opponentCard == null) return true;
         }
         return false;
     }

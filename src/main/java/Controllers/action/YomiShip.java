@@ -17,14 +17,12 @@ public class YomiShip extends Action {
 
     public void runActionForDefense(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
-        if (myCard.getPlace().startsWith("3")) {
-            CardController.moveCardToGraveyard(opponentBoard, opponentCard);
-        }
+        CardController.moveCardToGraveyard(opponentBoard, opponentCard);
     }
 
     @Override
     public boolean canEffectBeActivated(GameController gameController, Card myCard, Card opponentCard) {
-        return true;
+        return myCard.getPlace().startsWith("3");
     }
 }
 

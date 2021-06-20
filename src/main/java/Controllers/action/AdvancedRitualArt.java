@@ -7,6 +7,9 @@ import Models.Card;
 import Views.GameView;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class AdvancedRitualArt extends Action{
 
@@ -39,7 +42,7 @@ public class AdvancedRitualArt extends Action{
         ArrayList<Card> cardsInHand = myBoard.getCardsInHand();
         ArrayList<Card> ritualMonsters = new ArrayList<>();
         for(Card card : cardsInHand){
-            if(card.getType().startsWith("Monster") && card.getType().contains("Ritual")){
+            if(card != null && card.isMonster() && card.getType().contains("Ritual")){
                 ritualMonsters.add(card);
             }
         }
@@ -52,7 +55,7 @@ public class AdvancedRitualArt extends Action{
     }
 
     public static boolean canRitualSummonWithMonster(Card ritualMonster, Board board){
-        ArrayList<Card> monsterZone = board.getMonsters();
+        List<Card> monsterZone = board.getMonsters().stream().filter(Objects::nonNull).collect(Collectors.toList());
         ArrayList<Card> randomArray = new ArrayList<>();
         for(int i = 0; i < 2; i++){
             if(i==1) randomArray.add(monsterZone.get(0));

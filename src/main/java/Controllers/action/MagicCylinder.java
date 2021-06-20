@@ -23,6 +23,9 @@ public class MagicCylinder extends Action{
     @Override
     public boolean canEffectBeActivated(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
-        return gameController.lastActions[1-myNumber].equals("attack") && (!myCard.getPlace().startsWith("hand"));
+        return opponentCard != null &&
+                gameController.lastActions[1-myNumber] != null &&
+                gameController.lastActions[1-myNumber].equals("attack") &&
+                (!myCard.getPlace().startsWith("hand"));
     }
 }

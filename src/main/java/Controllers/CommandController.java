@@ -424,7 +424,7 @@ public class CommandController {
         if(gameController.getSelectedCard().hasAttackedInTurn()){
             throw new Exception("this card already attacked");
         }
-        if(CardController.cardsOfArrayListAreAllNull(gameController.getBoard(gameController.getCurrentPlayer() + 1).getMonsters())){
+        if(!CardController.cardsOfArrayListAreAllNull(gameController.getBoard(gameController.getCurrentPlayer() + 1).getMonsters())){
             throw new Exception("you can't attack the opponent directly");
         }
         gameController.getSelectedCard().setAttackedInTurn(true);
@@ -444,6 +444,9 @@ public class CommandController {
         }
         if(gameController.getPhaseNumber() != 3 && gameController.getPhaseNumber() != 5){
             throw new Exception("you can't activate an effect on this turn");
+        }
+        if(gameController.getSelectedCard().getMode() == null){
+            throw new Exception("you can't activate this card");
         }
         if(gameController.getSelectedCard().getMode().equals("O")){
             throw new Exception("you have already activated this card");

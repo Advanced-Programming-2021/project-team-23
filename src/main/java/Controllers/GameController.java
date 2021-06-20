@@ -54,6 +54,10 @@ public class GameController {
         lp = new int[2];
         users[0] = user1;
         users[1] = user2;
+        boards[0] = new Board(user1);
+        boards[1] = new Board(user2);
+        lp[0] = 8000;
+        lp[1] = 8000;
         lpOfWinners = new int[]{-1, -1, -1};
         winners = new int[]{-1, -1, -1};
         duelMenu = new DuelMenu(this);
@@ -70,6 +74,7 @@ public class GameController {
             currentPlayer = 0;
             isDamageToPlayersCalculated = false;
             phaseNumber = 1;
+            DuelMenu.printGameStarted();
             if(!isAI) {
                 phaseController(1);
                 if (isGameEnded()) {
@@ -103,17 +108,20 @@ public class GameController {
                 printWinnerOfDuel();
                 return;
             } else {
-                if(boards[currentPlayer].canAnyCardBeChosenForThisBoardInDrawPhase()) {
+                if(boards[currentPlayer].canAnyCardBeChosenForThisBoardInDrawPhase() &&
+                        !CardController.arrayListOfCardsIsFull(boards[currentPlayer].getCardsInHand(), 6)) {
                     Card card = boards[currentPlayer].getCardByPlace("4");
                     CardController.addCardToHandFromDeck(boards[currentPlayer], card);
                     DuelMenu.printSuccessfulAddingCardInDrawPhase(card);
                 }
+                duelMenu.printBoards();
                 duelMenu.getCommands();
                 phaseNumber++;
             }
         }
         if(newPhaseNumber == 2){
             callSomeCardsInStandbyPhase();
+            duelMenu.printBoards();
             duelMenu.getCommands();
             phaseNumber++;
         }
@@ -337,33 +345,31 @@ public class GameController {
     public void createAndRunChain(){
         boolean[] isPlayerDone = new boolean[]{false, false};
         label:
-        for(int i = 0; i >= 0; i++){
+        while(true){
             if(isPlayerDone[0] && isPlayerDone[1]){
                 runChain();
                 return;
             }
-            currentPlayer = (currentPlayer + 1) % 2;
-            duelMenu.printCurrentPlayerTurn();
-            duelMenu.printBoards();
+            currentPlayer = 1 - currentPlayer;
             for(int j = 0; j < 2; j++) {
                 ArrayList<Card> arrayList;
-                if(j == 0) arrayList = getBoard(currentPlayer + i).getMonsters();
-                else arrayList = getBoard(currentPlayer + i).getSpellsAndTraps();
+                if(j == 0) arrayList = getBoard(currentPlayer).getMonsters();
+                else arrayList = getBoard(currentPlayer).getSpellsAndTraps();
                 for (Card card : arrayList) {
-                    if (card != null && (card.getSpeed() > 1 && (lastCards[(currentPlayer + i + 1) % 2] == null || card.getSpeed() >= lastCards[(currentPlayer + i + 1) % 2].getSpeed())) &&
-                            Action.canEffectBeActivatedForCard(this, card, lastCards[(currentPlayer + i + 1) % 2])) {
+                    if (card != null && (card.getSpeed() > 1 && (lastCards[(currentPlayer + 1) % 2] == null || card.getSpeed() >= lastCards[(currentPlayer + 1) % 2].getSpeed())) &&
+                            Action.canEffectBeActivatedForCard(this, card, lastCards[(currentPlayer + 1) % 2])) {
+                        duelMenu.printCurrentPlayerTurn();
                         if (isAI || GameView.doesUserWantToUseEffectOfCard(card)) {
-                            isPlayerDone[(currentPlayer + i + 1) % 2] = false;
-                            chain.add(new Card[]{card, lastCards[(currentPlayer + i + 1) % 2]});
-                            lastCards[(currentPlayer + i) % 2] = card;
-                            currentPlayer = (currentPlayer + 1) % 2;
+                            isPlayerDone[(currentPlayer + 1) % 2] = false;
+                            chain.add(new Card[]{card, lastCards[(currentPlayer + 1) % 2]});
+                            lastCards[(currentPlayer) % 2] = card;
+                            System.out.println(card.getName() + " added to chain");
                             continue label;
                         }
                     }
                 }
             }
-            currentPlayer = (currentPlayer + 1) % 2;
-            isPlayerDone[(currentPlayer + i + 1) % 2] = true;
+            isPlayerDone[(currentPlayer) % 2] = true;
         }
     }
 
@@ -371,6 +377,7 @@ public class GameController {
         int size = chain.size();
         for(int i = size - 1; i >= 0; i--){
             Action.runActionForCard(this, chain.get(i)[0], chain.get(i)[1]);
+            duelMenu.printBoards();
         }
     }
 

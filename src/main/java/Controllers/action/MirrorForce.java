@@ -21,7 +21,7 @@ public class MirrorForce extends Action{
         setBoards(gameController, myCard);
         ArrayList<Card> opponentMonsters = opponentBoard.getMonsters();
         for(Card monster : opponentMonsters){
-            if(monster.getMode().startsWith("O")){
+            if(monster != null && monster.getMode().startsWith("O")){
                 CardController.moveCardToGraveyard(opponentBoard, monster);
             }
         }
@@ -30,6 +30,8 @@ public class MirrorForce extends Action{
     @Override
     public boolean canEffectBeActivated(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
-        return gameController.lastActions[1-myNumber].equals("attack") && (!myCard.getPlace().startsWith("hand"));
+        return gameController.lastActions[1-myNumber] != null &&
+                gameController.lastActions[1-myNumber].equals("attack") &&
+                (!myCard.getPlace().startsWith("hand"));
     }
 }

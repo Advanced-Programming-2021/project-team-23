@@ -31,7 +31,7 @@ public class Scanner extends Action{
             }
             else{
                 for(Card aCard : graveyard){
-                    if(aCard.getType().startsWith("Monster")){
+                    if(aCard != null && aCard.isMonster()){
                         monster = aCard;
                     }
                 }

@@ -71,7 +71,8 @@ public class Texchanger extends Action {
         if(zone.equals("4")) arrayList = board.getDeckZone();
         if(zone.equals("hand")) arrayList = board.getCardsInHand();
         for(Card card : arrayList){
-            if(card.getType().startsWith("Monster") &&
+            if(card != null &&
+                    card.getType().startsWith("Monster") &&
                     card.getMonsterType().equals(monsterType) &&
                     card.isNormalMonster()){
                 return card;
@@ -90,7 +91,8 @@ public class Texchanger extends Action {
             return false;
         }
 
-        return gameController.lastActions[1-myNumber].equals("attack");
+        return gameController.lastActions[1-myNumber] != null &&
+                gameController.lastActions[1-myNumber].equals("attack");
     }
 }
 

@@ -36,6 +36,7 @@ public abstract class Action {
 
 
     public static void runActionForCard(GameController gameController, Card myCard, Card opponentCard){
+        setBoards(gameController, myCard);
         if(opponentCard == null){
             switch(myCard.getName()){
                 case "Man-Eater Bug":
@@ -303,7 +304,7 @@ public abstract class Action {
 
     public static boolean canEffectBeActivatedForCard(GameController gameController, Card myCard, Card opponentCard){
         setBoards(gameController, myCard);
-        if(myCard.getType().startsWith("Spell") && !myBoard.canAnyTrapBeActivated()) return false;
+        if(myCard.isTrap() && !myBoard.canAnyTrapBeActivated()) return false;
         switch(myCard.getName()){
             case "Man-Eater Bug":
                 ManEaterBug manEaterBug = new ManEaterBug();

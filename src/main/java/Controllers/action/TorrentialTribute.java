@@ -23,8 +23,8 @@ public class TorrentialTribute extends Action{
     @Override
     public boolean canEffectBeActivated(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
-        return ((gameController.lastActions[1-myNumber].equals("summon") ||
-                gameController.lastActions[myNumber].equals("summon")))
+        return ((gameController.lastActions[1-myNumber] != null && gameController.lastActions[1-myNumber].equals("summon")) ||
+                (gameController.lastActions[myNumber] != null && gameController.lastActions[myNumber].equals("summon")))
                 && (!myCard.getPlace().startsWith("hand"));
     }
 }

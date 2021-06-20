@@ -23,8 +23,8 @@ public class SpellAbsorption extends Action{
     @Override
     public boolean canEffectBeActivated(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
-        return (gameController.lastActions[myNumber].equals("activateSpell") ||
-                gameController.lastActions[1-myNumber].equals("activateSpell"))
+        return ((gameController.lastActions[myNumber] != null && gameController.lastActions[myNumber].equals("activateSpell")) ||
+                (gameController.lastActions[1 - myNumber] != null && gameController.lastActions[1-myNumber].equals("activateSpell")))
                 && (!myCard.getPlace().startsWith("hand"));
     }
 }

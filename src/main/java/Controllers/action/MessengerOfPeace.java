@@ -31,6 +31,6 @@ public class MessengerOfPeace extends Action {
 
     @Override
     public boolean canEffectBeActivated(GameController gameController, Card myCard, Card opponentCard) {
-        return opponentCard.getType().startsWith("Monster");
+        return opponentCard != null && opponentCard.isMonster();
     }
 }

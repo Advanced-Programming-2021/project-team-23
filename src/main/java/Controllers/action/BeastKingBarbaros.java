@@ -35,6 +35,7 @@ public class BeastKingBarbaros extends Action {
     public boolean canEffectBeActivated(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
         return gameController.lastCards[myNumber] == myCard &&
+                gameController.lastActions[myNumber] != null &&
                 gameController.lastActions[myNumber].equals("summon") &&
                 opponentCard == null;
     }

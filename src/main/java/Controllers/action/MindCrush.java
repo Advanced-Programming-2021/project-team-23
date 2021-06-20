@@ -29,7 +29,7 @@ public class MindCrush extends Action {
 
     public void destroyAllCardInArrayWithName(ArrayList<Card> arrayList, String name, Board board) {
         for (Card card : arrayList) {
-            if (card.getName().equals(name)) {
+            if (card != null && card.getName().equals(name)) {
                 CardController.moveCardToGraveyard(board, card);
             }
         }

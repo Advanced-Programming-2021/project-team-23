@@ -10,9 +10,11 @@ import Models.Card;
 import Models.User;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class DuelMenu{
 
@@ -24,7 +26,12 @@ public class DuelMenu{
 
     public static Scanner scanner = new Scanner(System.in);
 
+    public static void printGameStarted(){
+        System.out.println("\nDuel Started");
+    }
+
     public static void printPhaseName(int newPhaseNumber){
+        System.out.println();
         if(newPhaseNumber == 1){
             System.out.println("phase: draw phase");
         }
@@ -43,6 +50,7 @@ public class DuelMenu{
         if(newPhaseNumber == 6){
             System.out.println("phase: end phase");
         }
+        System.out.println();
     }
 
     public static void printSuccessfulAddingCardInDrawPhase(Card card){
@@ -106,9 +114,9 @@ public class DuelMenu{
             String message = commandController.select(inputMatcher);
             System.out.println(message);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
+            e.printStackTrace();
         }
-        printBoards();
     }
 
 
@@ -118,7 +126,8 @@ public class DuelMenu{
             String message = commandController.summon();
             System.out.println(message);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         printBoards();
     }
@@ -130,7 +139,8 @@ public class DuelMenu{
             String message = commandController.set();
             System.out.println(message);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         printBoards();
     }
@@ -141,7 +151,8 @@ public class DuelMenu{
             String message = commandController.setMonster();
             System.out.println(message);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         printBoards();
     }
@@ -152,7 +163,8 @@ public class DuelMenu{
             String message = commandController.setSpellOrTrap();
             System.out.println(message);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         printBoards();
     }
@@ -164,7 +176,8 @@ public class DuelMenu{
             String message = commandController.changePosition(position);
             System.out.println(message);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         printBoards();
     }
@@ -176,7 +189,8 @@ public class DuelMenu{
             String message = commandController.flipSummon();
             System.out.println(message);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         printBoards();
     }
@@ -188,7 +202,8 @@ public class DuelMenu{
             String message = commandController.attack(number);
             System.out.println(message);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         printBoards();
     }
@@ -199,7 +214,8 @@ public class DuelMenu{
             String message = commandController.directAttack();
             System.out.println(message);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         printBoards();
     }
@@ -211,7 +227,8 @@ public class DuelMenu{
             String message = commandController.activateSpell();
             System.out.println(message);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         printBoards();
     }
@@ -294,12 +311,13 @@ public class DuelMenu{
     }
 
     public void printBoards(){
+        System.out.println();
         Board myBoard = gameController.getBoard(gameController.currentPlayer);
         Board opponentBoard = gameController.getBoard(gameController.currentPlayer + 1);
         ArrayList<Card> cards;
         int handSize;
         System.out.println(gameController.users[1 - gameController.currentPlayer].getNickname() + ": " + gameController.lp[1 - gameController.currentPlayer]);
-        handSize = opponentBoard.getCardsInHand().size();
+        handSize = opponentBoard.getCardsInHand().stream().filter(Objects::nonNull).collect(Collectors.toList()).size();
         String s = "  ";
         System.out.print("  " + s);
         for(int i = 0; i < handSize; i++){
@@ -339,7 +357,7 @@ public class DuelMenu{
         else System.out.print("O");
         System.out.println();
         System.out.println();
-        System.out.println("--------------------------------------");
+        System.out.println("-----------------------------");
         System.out.println();
         if(myBoard.getFieldZone().get(0) == null) System.out.print("E");
         else System.out.print("O");
@@ -375,13 +393,14 @@ public class DuelMenu{
         System.out.print("                        ");
         System.out.print(myBoard.getDeckZone().size());
         System.out.println();
-        handSize = myBoard.getCardsInHand().size();
+        handSize = myBoard.getCardsInHand().stream().filter(Objects::nonNull).collect(Collectors.toList()).size();
         System.out.print("  " + s);
         for(int i = 0; i < handSize; i++){
             System.out.print("c " + s);
         }
         System.out.println();
         System.out.println(gameController.users[gameController.currentPlayer].getNickname() + ": " + gameController.lp[gameController.currentPlayer]);
+        System.out.println();
     }
 
 
