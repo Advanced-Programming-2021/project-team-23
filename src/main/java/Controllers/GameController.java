@@ -297,7 +297,7 @@ public class GameController {
 
     public boolean isGameEnded(){
         if(currentRound == 1) {
-            if(numberOfRounds == 1){
+            if(numberOfRounds == 1 && winners[0] != -1){
                 winner = winners[0];
                 return true;
             } else {
@@ -305,13 +305,15 @@ public class GameController {
             }
         }
         else if(currentRound == 2) {
-            if(winners[0] != winners[1]) return false;
+            if(winners[0] != winners[1] || winners[1] == -1) return false;
             else winner = winners[0];
             return true;
         } else {
+            if(winners[1] == -1) return false;
             if(winners[0] == winners[1] || winners[0] == winners[2]){
                 winner = winners[0];
             } else {
+                if(winners[2] == -1) return false;
                 winner = 1 - winners[0];
             }
             return true;

@@ -15,7 +15,7 @@ public class TwinTwisters extends Action{
         int number = 1;
         if(!gameController.isAI) number = GameView.getACardNumberInHandFromUser(myBoard);
         CardController.moveCardToGraveyard(myBoard, myBoard.getCardByPlace("hand_" + number));
-        int numberOfSpellsOrTrapsToBeDestroyed = 2;
+        int numberOfSpellsOrTrapsToBeDestroyed = 1;
         if(!gameController.isAI) numberOfSpellsOrTrapsToBeDestroyed = GameView.
                 howManyCardsDoesPlayerWantToDestroy(2);
         ArrayList<Card> spellsAndTrapsToBeDestroyed;

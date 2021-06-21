@@ -445,10 +445,8 @@ public class CommandController {
         if(gameController.getPhaseNumber() != 3 && gameController.getPhaseNumber() != 5){
             throw new Exception("you can't activate an effect on this turn");
         }
-        if(gameController.getSelectedCard().getMode() == null){
-            throw new Exception("you can't activate this card");
-        }
-        if(gameController.getSelectedCard().getMode().equals("O")){
+        if(gameController.getSelectedCard().getMode() != null &&
+                gameController.getSelectedCard().getMode().equals("O")){
             throw new Exception("you have already activated this card");
         }
         if(gameController.getBoard(gameController.getCurrentPlayer()).getCardsInHand().contains(gameController.getSelectedCard()) &&
@@ -469,7 +467,7 @@ public class CommandController {
         if(gameController.getSelectedCard().getType().contains("Field") && gameController.getSelectedCard().getPlace().startsWith("hand")){
             ArrayList<Card> fieldZone = board.getFieldZone();
             if(fieldZone.get(0) != null){
-                CardController.moveCardToGraveyard(board, gameController.getSelectedCard());
+                CardController.moveCardToGraveyard(board, fieldZone.get(0));
             }
             CardController.moveCardFromFirstArrayToSecondArray(gameController.getSelectedCard(), board.getCardsInHand(), fieldZone, "5");
         } else {

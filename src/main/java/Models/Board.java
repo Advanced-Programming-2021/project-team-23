@@ -9,7 +9,7 @@ public class Board {
 
     private ArrayList<Card> monsters = new ArrayList<>();
     private ArrayList<Card> spellsAndTraps = new ArrayList<>();
-    private ArrayList<Card> deckZone = new ArrayList<>(); // new is necessary for deckZone
+    private ArrayList<Card> deckZone = new ArrayList<>();
     private ArrayList<Card> graveyard = new ArrayList<>();
     private ArrayList<Card> fieldZone = new ArrayList<>();
     private ArrayList<Card> cardsInHand = new ArrayList<>();
@@ -31,13 +31,16 @@ public class Board {
         // add cards to deckZone
         ArrayList<Card> mainDeck = user.activeDeck.mainDeck;
         for(Card card: mainDeck){
-            deckZone.add(new Card(card.getName()));
+            Card deckCard = new Card(card.getName());
+            deckCard.setPlace("4");
+            deckZone.add(deckCard);
         }
         Collections.shuffle(deckZone);
         // add 5 cards from deckZone to cardsInHand
         for(int i = 0; i < 5; i++){
             Card card = deckZone.get(i);
             deckZone.remove(card);
+            card.setPlace("hand_" + i + 1);
             cardsInHand.set(i, card);
         }
         canAnyTrapBeActivated = true;

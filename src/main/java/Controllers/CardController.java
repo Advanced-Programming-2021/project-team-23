@@ -27,19 +27,16 @@ public class CardController {
         if (place.startsWith("3")) {
             ArrayList<Card> graveyard = board.getGraveyard();
             graveyard.add(card);
-            board.setGraveyard(graveyard);
             if (card != null) card.setPlace("3");
         }
         if (place.startsWith("4")) {
             ArrayList<Card> deckZone = board.getDeckZone();
             deckZone.add(card);
-            board.setDeckZone(deckZone);
             if (card != null) card.setPlace("4");
         }
         if (place.startsWith("5")) {
             ArrayList<Card> fieldZone = board.getFieldZone();
-            fieldZone.add(card);
-            board.setFieldZone(fieldZone);
+            fieldZone.set(0, card);
             if (card != null) card.setPlace("5");
         }
     }
@@ -55,17 +52,16 @@ public class CardController {
             if (place.startsWith("4")) {
                 ArrayList<Card> deckZone = board.getDeckZone();
                 deckZone.remove(card);
-                board.setDeckZone(deckZone);
             }
             if (place.startsWith("5")) {
                 ArrayList<Card> fieldZone = board.getFieldZone();
-                fieldZone.remove(card);
-                board.setFieldZone(fieldZone);
+                fieldZone.set(0, null);
             }
             if(place.startsWith("hand")) {
                 ArrayList<Card> cardsInHand = board.getCardsInHand();
-                cardsInHand.remove(card);
-                board.setCardsInHand(cardsInHand);
+                for (int i = 0; i < 6; i++) {
+                    if (cardsInHand.get(i) == card) cardsInHand.set(i, null);
+                }
             }
             setCardInPlace(card, board, "3");
         }
