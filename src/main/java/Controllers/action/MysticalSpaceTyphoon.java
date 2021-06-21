@@ -8,6 +8,7 @@ import Views.GameView;
 import java.util.ArrayList;
 
 public class MysticalSpaceTyphoon extends Action {
+
     @Override
     public void runFirstAction(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);

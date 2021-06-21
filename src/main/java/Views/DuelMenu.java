@@ -298,7 +298,7 @@ public class DuelMenu{
         }
         System.out.println("Name: " + card.getName());
         System.out.println("Level: " + card.getLevel());
-        if(card.getType().startsWith("Monster")){
+        if(card.isMonster()){
             System.out.println("Type: " + card.getMonsterType());
             System.out.println("ATK: " + card.getAttack());
             System.out.println("DEF: " + card.getDefense());

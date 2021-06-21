@@ -27,14 +27,18 @@ public class FieldSpell extends Action{
         for(ArrayList<Card> monsterZone : monsterZones){
             for(Card monster : monsterZone) {
                 if(monster != null) {
-                    for (String type : monsterTypesAndAttack.keySet()) {
-                        if (monster.getMonsterType().equals(type)) {
-                            monster.increaseAttack(monsterTypesAndAttack.get(type));
+                    if(monsterTypesAndAttack != null) {
+                        for (String type : monsterTypesAndAttack.keySet()) {
+                            if (monster.getMonsterType().equals(type)) {
+                                monster.increaseAttack(monsterTypesAndAttack.get(type));
+                            }
                         }
                     }
-                    for (String type : monsterTypesAndDefense.keySet()) {
-                        if (monster.getMonsterType().equals(type)) {
-                            monster.increaseDefense(monsterTypesAndDefense.get(type));
+                    if(monsterTypesAndDefense != null) {
+                        for (String type : monsterTypesAndDefense.keySet()) {
+                            if (monster.getMonsterType().equals(type)) {
+                                monster.increaseDefense(monsterTypesAndDefense.get(type));
+                            }
                         }
                     }
                 }

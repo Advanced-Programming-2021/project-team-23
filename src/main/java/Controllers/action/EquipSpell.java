@@ -3,6 +3,7 @@ package Controllers.action;
 import Controllers.GameController;
 import Models.Board;
 import Models.Card;
+import Views.GameView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,7 +13,11 @@ public class EquipSpell extends Action{
     @Override
     public void runFirstAction(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
-        Card equippedCard = myCard.getEquippedCard();
+        Card equippedCard;
+        if(gameController.isAI) equippedCard = myBoard.getMonsters().get(0);
+        else equippedCard = GameView.getCardsByAddressFromZone(myBoard, 1, "1").get(0);
+
+        if(equippedCard == null) return;
         if(myCard.getName().equals("United We Stand")){
             runActionOfUnitedWeStand(gameController, equippedCard, myCard);
             return;
@@ -22,18 +27,22 @@ public class EquipSpell extends Action{
             return;
         }
         HashMap<String, Integer> monsterTypesAndAttack =
-                myCard.getTypesOfMonstersWithAttackToBeIncreasedDueToAFieldSpell();
+                myCard.getTypesOfMonstersWithAttackToBeIncreasedDueToEquipSpell();
         HashMap<String, Integer> monsterTypesAndDefense =
-                myCard.getTypesOfMonstersWithDefenseToBeIncreasedDueToAFieldSpell();
+                myCard.getTypesOfMonstersWithDefenseToBeIncreasedDueToEquipSpell();
 
-        for (String type : monsterTypesAndAttack.keySet()) {
-            if (type.equals("null") || equippedCard.getMonsterType().equals(type)) {
-                equippedCard.increaseAttack(monsterTypesAndAttack.get(type));
+        if(monsterTypesAndAttack != null) {
+            for (String type : monsterTypesAndAttack.keySet()) {
+                if (type.equals("null") || equippedCard.getMonsterType().equals(type)) {
+                    equippedCard.increaseAttack(monsterTypesAndAttack.get(type));
+                }
             }
         }
-        for (String type : monsterTypesAndDefense.keySet()) {
-            if (type.equals("null") || equippedCard.getMonsterType().equals(type)) {
-                equippedCard.increaseDefense(monsterTypesAndDefense.get(type));
+        if(monsterTypesAndDefense != null) {
+            for (String type : monsterTypesAndDefense.keySet()) {
+                if (type.equals("null") || equippedCard.getMonsterType().equals(type)) {
+                    equippedCard.increaseDefense(monsterTypesAndDefense.get(type));
+                }
             }
         }
     }

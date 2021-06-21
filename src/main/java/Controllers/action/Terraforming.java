@@ -22,7 +22,7 @@ public class Terraforming extends Action{
 
     @Override
     public void runActionForDefense(GameController gameController, Card myCard, Card opponentCard) {
-        runFirstAction(gameController, myCard, opponentCard);
+
     }
 
     @Override
@@ -34,6 +34,6 @@ public class Terraforming extends Action{
         for(Card card : deckZone){
             if(card != null && card.getType().startsWith("Spell_Field")) return true;
         }
-        return false;
+        return opponentCard == null;
     }
 }

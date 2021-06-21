@@ -15,7 +15,10 @@ public class GameView {
     public static ArrayList<Card> getCardsByAddressFromZone(Board board, int zoneNumber, String numberOfCards) {
         // zoneNumber must be 1 or 2
         while (true) {
-            System.out.println("please enter " + numberOfCards + " address from 1 to 5 : ");
+            String string = "please enter " + numberOfCards + " address from 1 to 5 in " + board.user.getNickname() + "'s board ";
+            if(zoneNumber == 1) string += "to choose monster";
+            if(zoneNumber == 2) string += "to choose spell or trap";
+            System.out.println(string);
             String inputString = scanner.nextLine();
 
             String[] digits = inputString.split("[ ,]+");
@@ -56,7 +59,7 @@ public class GameView {
 
     public static ArrayList<Card> getMonstersFromGraveyard(Board board, int numberOfCards) {
         while (true) {
-            System.out.println("please enter " + numberOfCards + " positive number to get card from graveyard : ");
+            System.out.println("please enter " + numberOfCards + " positive number to get card from graveyard in " + board.user.getNickname() + "'s board:");
             String inputString = scanner.nextLine();
 
             String[] digits = inputString.split("[ ,]+");

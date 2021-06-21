@@ -5,7 +5,7 @@ import java.util.Collections;
 
 public class Board {
 
-    private User user;
+    public User user;
 
     private ArrayList<Card> monsters = new ArrayList<>();
     private ArrayList<Card> spellsAndTraps = new ArrayList<>();

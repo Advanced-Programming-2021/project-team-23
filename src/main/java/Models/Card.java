@@ -33,7 +33,6 @@ public class Card {
     private HashMap<String, Integer> typesOfMonstersWithDefenseToBeIncreasedDueToAFieldSpell; // set in constructor from database
     private HashMap<String, Integer> typesOfMonstersWithAttackToBeIncreasedDueToEquipSpell; // set in constructor from database (String can be null)
     private HashMap<String, Integer> typesOfMonstersWithDefenseToBeIncreasedDueToEquipSpell; // set in constructor from database (String can be null)
-    private Card equippedCard; // used for equip spell
 
     private Card chosenRitualMonsterForRitualSpell; // used for advanced ritual art
 
@@ -396,14 +395,6 @@ public class Card {
             int defense = Integer.parseInt(elementStrings[1]);
             typesOfMonstersWithDefenseToBeIncreasedDueToEquipSpell.put(type, defense);
         }
-    }
-
-    public Card getEquippedCard() {
-        return equippedCard;
-    }
-
-    public void setEquippedCard(Card equippedCard) {
-        this.equippedCard = equippedCard;
     }
 
     public boolean isNormalMonster() {
