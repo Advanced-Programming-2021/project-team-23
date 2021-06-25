@@ -140,8 +140,7 @@ public class DuelMenu{
             String message = commandController.summon();
             System.out.println(message);
         } catch (Exception e) {
-            //System.out.println(e.getMessage());
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         printBoards();
     }
@@ -153,32 +152,7 @@ public class DuelMenu{
             String message = commandController.set();
             System.out.println(message);
         } catch (Exception e) {
-            //System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-        printBoards();
-    }
-
-    public void setMonster(){
-        CommandController commandController = new CommandController(gameController);
-        try {
-            String message = commandController.setMonster();
-            System.out.println(message);
-        } catch (Exception e) {
-            //System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-        printBoards();
-    }
-
-    public void setSpellOrTrap(){
-        CommandController commandController = new CommandController(gameController);
-        try {
-            String message = commandController.setSpellOrTrap();
-            System.out.println(message);
-        } catch (Exception e) {
-            //System.out.println(e.getMessage());
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         printBoards();
     }
@@ -190,8 +164,7 @@ public class DuelMenu{
             String message = commandController.changePosition(position);
             System.out.println(message);
         } catch (Exception e) {
-            //System.out.println(e.getMessage());
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         printBoards();
     }
@@ -203,8 +176,7 @@ public class DuelMenu{
             String message = commandController.flipSummon();
             System.out.println(message);
         } catch (Exception e) {
-            //System.out.println(e.getMessage());
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         printBoards();
     }
@@ -216,8 +188,7 @@ public class DuelMenu{
             String message = commandController.attack(number);
             System.out.println(message);
         } catch (Exception e) {
-            //System.out.println(e.getMessage());
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         printBoards();
     }
@@ -228,8 +199,7 @@ public class DuelMenu{
             String message = commandController.directAttack();
             System.out.println(message);
         } catch (Exception e) {
-            //System.out.println(e.getMessage());
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         printBoards();
     }
@@ -241,8 +211,7 @@ public class DuelMenu{
             String message = commandController.activateSpell();
             System.out.println(message);
         } catch (Exception e) {
-            //System.out.println(e.getMessage());
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         printBoards();
     }

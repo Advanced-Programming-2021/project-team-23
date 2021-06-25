@@ -47,7 +47,7 @@ public class AITest {
                 "exit\n" +
                 "menu enter duel menu\n" +
                 "duel new ai rounds 1\n" +
-                "next phase\nnext phase\nnext phase\nnext phase\nnext phase\n" +
+                "next phase\nnext phase\ninvalid\nnext phase\nnext phase\nnext phase\n" +
                 "surrender\n" +
                 "exit\n" +
                 "logout\n" +
