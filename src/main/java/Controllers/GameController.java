@@ -16,6 +16,7 @@ public class GameController {
     public int[] lpOfWinners;   // add number after each round
     public int[] winners;  // contains 0 or 1 as playerNumber // add number after each round
     public int winner; // 0 or 1 // winner of whole match
+    public boolean isDuelEnded;
 
     public int phaseNumber;  // 1 to 6
 
@@ -66,6 +67,7 @@ public class GameController {
     public void runGameController(User user1, User user2, int numberOfRounds){
         if(isAI) ai = new AI(this);
         for(int i = 1; i <= numberOfRounds; i++) {
+            isDuelEnded = false;
             boards[0] = new Board(user1);
             boards[1] = new Board(user2);
             lp[0] = 8000;
@@ -149,7 +151,7 @@ public class GameController {
             resetSomeVariablesInEndOfTheTurn();
             phaseNumber = 1;
         }
-        if (isDuelEnded()) {
+        if (isDuelEnded || isDuelEnded()) {
             printWinnerOfDuel();
             return;
         }

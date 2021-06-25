@@ -72,7 +72,7 @@ public class Texchanger extends Action {
         if(zone.equals("hand")) arrayList = board.getCardsInHand();
         for(Card card : arrayList){
             if(card != null &&
-                    card.getType().startsWith("Monster") &&
+                    card.isMonster() &&
                     card.getMonsterType().equals(monsterType) &&
                     card.isNormalMonster()){
                 return card;

@@ -57,8 +57,8 @@ public class DeckMenu implements IMenu , ICheatCode {
             if(deck == null){
                 throw new Exception("deck with name " + deckName + " does not exist");
             }
+            if(user.activeDeck != null) user.activeDeck.isActive = false;
             deck.isActive = true;
-            user.activeDeck.isActive = false;
             user.activeDeck = deck;
             User.setUserInFile(user);
             return ("deck activated successfully!");

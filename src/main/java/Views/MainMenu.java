@@ -37,7 +37,7 @@ public class MainMenu implements IMenu , ICheatCode {
         Pattern pattern = Pattern.compile("^menu show-current$");
         Matcher matcher = pattern.matcher(command);
         if (matcher.find()) {
-            System.out.print("main menu\n");
+            System.out.println("main menu");
             return;
         }
 
@@ -83,6 +83,13 @@ public class MainMenu implements IMenu , ICheatCode {
             shopMenu.run();
             return;
         }
+
+        if(matcher.group(1).equals("menu enter import menu")){
+            ImportMenu importMenu = new ImportMenu();
+            importMenu.run();
+            return;
+        }
+
         System.out.print("menu navigation is not possible\n");
     }
 

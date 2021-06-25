@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class GameView {
 
-    static Scanner scanner = new Scanner(System.in);
+    public static Scanner scanner = IMenu.scan;
 
 
     public static ArrayList<Card> getCardsByAddressFromZone(Board board, int zoneNumber, String numberOfCards) {

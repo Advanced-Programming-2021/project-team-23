@@ -29,7 +29,7 @@ public class AdvancedRitualArt extends Action{
 
     @Override
     public void runActionForDefense(GameController gameController, Card myCard, Card opponentCard) {
-        runFirstAction(gameController, myCard, opponentCard);
+
     }
 
     @Override
@@ -85,7 +85,7 @@ public class AdvancedRitualArt extends Action{
     public static boolean isSumOfLevelsOfMonstersInArrayEqualToLevelOfRitualMonster(ArrayList<Card> cards, Card ritualMonster){
         int sum = 0;
         for(Card card : cards){
-            sum += card.getLevel();
+            if(card != null) sum += card.getLevel();
         }
         return sum == ritualMonster.getLevel();
     }

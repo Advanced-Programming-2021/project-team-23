@@ -19,12 +19,12 @@ import java.util.stream.Collectors;
 public class DuelMenu{
 
     public GameController gameController;
+    public static Scanner scanner;
 
     public DuelMenu(GameController gameController){
         this.gameController = gameController;
+        scanner = IMenu.scan;
     }
-
-    public static Scanner scanner = new Scanner(System.in);
 
     public static void printGameStarted(){
         System.out.println("\nDuel Started");
@@ -65,9 +65,15 @@ public class DuelMenu{
     public void getCommands(){
         String input;
         Matcher matcher;
-        while((!(input = scanner.nextLine()).equals("next phase")) && (!gameController.isDuelEnded())){
+        while((!gameController.isDuelEnded) &&
+                (!gameController.isDuelEnded()) &&
+                (!(input = scanner.nextLine()).equals("next phase"))){
             matcher = getCommandMatcher(input, "select ([a-z0-9 -]+)");
             if(matcher.matches()) select(matcher);
+            matcher = getCommandMatcher(input, "increase LP ([\\d]+)");
+            if(matcher.matches()) gameController.lp[gameController.currentPlayer] += Integer.parseInt(matcher.group(1));
+            matcher = getCommandMatcher(input, "duel set-winner (.+)");
+            if(matcher.matches()) setWinnerByCheatCode(matcher);
             else if(input.matches("summon")) summon();
             else if(input.matches("set")) set();
             else if(input.matches("surrender")) surrender();
@@ -98,13 +104,21 @@ public class DuelMenu{
         }
     }
 
+    private void setWinnerByCheatCode(Matcher matcher){
+        String nickname = matcher.group(1);
+        for(int i = 0; i < 2; i++) {
+            if (nickname.equals(gameController.users[i].nickname)){
+                gameController.winners[gameController.currentRound - 1] = i;
+                gameController.isDuelEnded = true;
+                return;
+            }
+        }
+        System.out.println("there is no such nickname");
+    }
+
     private void surrender() {
         gameController.winners[gameController.currentRound - 1] = 1 - gameController.currentPlayer;
-        gameController.printWinnerOfDuel();
-        if(gameController.isGameEnded()){
-            if(gameController.numberOfRounds == 3) gameController.printWinnerOfMatch();
-            gameController.setAwards();
-        }
+        gameController.isDuelEnded = true;
     }
 
 
@@ -237,7 +251,7 @@ public class DuelMenu{
         Board board = gameController.getBoard(gameController.getCurrentPlayer());
         if(!AdvancedRitualArt.canEffectBeActivatedForCard(gameController, ritualSpell, null)) return;
         while(true){
-            if(!(gameController.getSelectedCard().getType().startsWith("Monster") &&
+            if(!(gameController.getSelectedCard().isMonster() &&
                     gameController.getSelectedCard().getCardType().equals("Ritual") &&
                     AdvancedRitualArt.canRitualSummonWithMonster(gameController.getSelectedCard(), board))){
                 System.out.println("please select a new ritual monster card");

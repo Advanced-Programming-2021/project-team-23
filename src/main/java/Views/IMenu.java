@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public interface IMenu {
 
-    public Scanner scan = new Scanner(System.in);
+    public static Scanner scan = new Scanner(System.in);
 
     public default void run() throws IOException {
 
