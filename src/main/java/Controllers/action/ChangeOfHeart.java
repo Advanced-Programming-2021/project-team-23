@@ -15,7 +15,7 @@ public class ChangeOfHeart extends Action{
         setBoards(gameController, myCard);
         if(!(gameController.getPhaseNumber() == 6)){
             Card monster;
-            if(gameController.isAI) monster = CardController.getSomeCardsFromZone(opponentBoard, 1, "1").get(0);
+            if(gameController.users[myNumber].isAI()) monster = CardController.getSomeCardsFromZone(opponentBoard, 1, "1").get(0);
             else monster = GameView.getCardsByAddressFromZone(opponentBoard, 1, "1").get(0);
             CardController.moveCardFromFirstArrayToSecondArray(monster,
                     opponentBoard.getMonsters(), myBoard.getMonsters(), "1");

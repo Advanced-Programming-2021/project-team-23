@@ -17,10 +17,8 @@ public class Suijin extends Action{
 
     public void runActionForDefense(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
-        if(myCard.getMode().endsWith("O") && myCard.getNumberOfTimesUsed() == 0){
-            opponentCard.setAttack(0);
-            myCard.increaseNumberOfTimesUsed();
-        }
+        opponentCard.setAttack(0);
+        myCard.increaseNumberOfTimesUsed();
     }
 
     @Override
@@ -28,6 +26,8 @@ public class Suijin extends Action{
         setBoards(gameController, myCard);
         return gameController.lastActions[1-myNumber] != null &&
                 gameController.lastActions[1-myNumber].equals("attack") &&
-                opponentCard != null;
+                opponentCard != null &&
+                myCard.getMode().endsWith("O") &&
+                myCard.getNumberOfTimesUsed() == 0;
     }
 }

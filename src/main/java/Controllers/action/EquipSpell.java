@@ -14,7 +14,7 @@ public class EquipSpell extends Action{
     public void runFirstAction(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
         Card equippedCard;
-        if(gameController.isAI) equippedCard = myBoard.getMonsters().get(0);
+        if(gameController.users[myNumber].isAI()) equippedCard = myBoard.getMonsters().get(0);
         else equippedCard = GameView.getCardsByAddressFromZone(myBoard, 1, "1").get(0);
 
         if(equippedCard == null) return;

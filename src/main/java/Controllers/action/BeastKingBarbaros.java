@@ -15,8 +15,8 @@ public class BeastKingBarbaros extends Action {
 
     public void runFirstAction(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
-        if((!myCard.getPlace().startsWith("1"))) {
-            if (gameController.isAI || GameView.doesUserWantToUseOptionalNumberForTributes(0)) {
+        if(!myCard.getPlace().startsWith("1")) {
+            if (gameController.users[myNumber].isAI() || GameView.doesUserWantToUseOptionalNumberForTributes(0)) {
                 myCard.setNumberOfTributesNeeded(0);
                 myCard.setAttack(1900);
             } else if (CardController.areThereEnoughCardsInMonsterZoneToTribute(myBoard, 3) &&

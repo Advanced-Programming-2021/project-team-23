@@ -6,8 +6,6 @@ import Models.Card;
 
 public class TorrentialTribute extends Action{
 
-    // call when opponent monster summon
-
     @Override
     public void runFirstAction(GameController gameController, Card myCard, Card opponentCard) {
         runActionForDefense(gameController, myCard, opponentCard);

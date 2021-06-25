@@ -15,7 +15,7 @@ public class MessengerOfPeace extends Action {
     public void runFirstAction(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
         if(gameController.getPhaseNumber() == 2){
-            if(gameController.isAI || GameView.doesUserWantToDestroyHisCard(myCard)){
+            if(gameController.users[myNumber].isAI() || GameView.doesUserWantToDestroyHisCard(myCard)){
                 CardController.moveCardToGraveyard(myBoard, myCard);
             } else {
                 gameController.increaseLp(myNumber, -100);

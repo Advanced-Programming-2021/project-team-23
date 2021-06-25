@@ -16,17 +16,15 @@ public class SupplySquad extends Action{
     @Override
     public void runActionForDefense(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
-        if(!myCard.isEffectUsedInTurn()){
-            Card card = myBoard.getCardByPlace("4");
-            if(card != null) {
-                CardController.addCardToHandFromDeck(myBoard, card);
-                myCard.setIsEffectUsedInTurn(true);
-            }
+        Card card = myBoard.getCardByPlace("4");
+        if(card != null) {
+            CardController.addCardToHandFromDeck(myBoard, card);
+            myCard.setIsEffectUsedInTurn(true);
         }
     }
 
     @Override
     public boolean canEffectBeActivated(GameController gameController, Card myCard, Card opponentCard) {
-        return true;
+        return !myCard.isEffectUsedInTurn();
     }
 }

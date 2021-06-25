@@ -17,7 +17,6 @@ public class Marshmallon extends Action {
 
     public void runActionForDefense(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
-        if (!myCard.getMode().contains("H")) return;
         if(gameController.isDamageToPlayersCalculated()){
             gameController.increaseLp(myNumber + 1, -1000);
         }
@@ -26,7 +25,9 @@ public class Marshmallon extends Action {
     @Override
     public boolean canEffectBeActivated(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
-        return (!myCard.getPlace().startsWith("hand")) && opponentCard != null;
+        return (!myCard.getPlace().startsWith("hand")) &&
+                opponentCard != null &&
+                myCard.getMode().contains("H");
     }
 }
 

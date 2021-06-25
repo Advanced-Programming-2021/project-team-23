@@ -27,10 +27,10 @@ public class Texchanger extends Action {
         String zone = "3";
 
         while(true){
-            if(!gameController.isAI) zone = GameView.getZoneNumber("3 or 4 or hand");
+            if(!gameController.users[myNumber].isAI()) zone = GameView.getZoneNumber("3 or 4 or hand");
             Card monster = getNormalMonsterOfType(myBoard, zone, "Cyberse");
             if(monster == null){
-                if(!gameController.isAI) GameView.printThatThereIsNoMonsterWithType("Cyberse");
+                if(!gameController.users[myNumber].isAI()) GameView.printThatThereIsNoMonsterWithType("Cyberse");
                 else{
                     if(zone.equals("3")) zone = "4";
                     else if(zone.equals("4")) zone = "hand";

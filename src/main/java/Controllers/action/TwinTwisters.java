@@ -13,15 +13,15 @@ public class TwinTwisters extends Action{
     public void runFirstAction(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
         int number = 1;
-        if(!gameController.isAI) number = GameView.getACardNumberInHandFromUser(myBoard);
+        if(!gameController.users[myNumber].isAI()) number = GameView.getACardNumberInHandFromUser(myBoard);
         CardController.moveCardToGraveyard(myBoard, myBoard.getCardByPlace("hand_" + number));
         int numberOfSpellsOrTrapsToBeDestroyed = 1;
-        if(!gameController.isAI) numberOfSpellsOrTrapsToBeDestroyed = GameView.
+        if(!gameController.users[myNumber].isAI()) numberOfSpellsOrTrapsToBeDestroyed = GameView.
                 howManyCardsDoesPlayerWantToDestroy(2);
         ArrayList<Card> spellsAndTrapsToBeDestroyed;
         spellsAndTrapsToBeDestroyed = CardController.
                 getSomeCardsFromZone(opponentBoard, 2, String.valueOf(numberOfSpellsOrTrapsToBeDestroyed));
-        if(!gameController.isAI) spellsAndTrapsToBeDestroyed = GameView.
+        if(!gameController.users[myNumber].isAI()) spellsAndTrapsToBeDestroyed = GameView.
                 getCardsByAddressFromZone(opponentBoard, 2, String.valueOf(numberOfSpellsOrTrapsToBeDestroyed));
         for(Card card : spellsAndTrapsToBeDestroyed){
             CardController.moveCardToGraveyard(opponentBoard, card);

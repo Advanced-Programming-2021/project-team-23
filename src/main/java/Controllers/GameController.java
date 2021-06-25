@@ -361,7 +361,7 @@ public class GameController {
                     if (card != null && (card.getSpeed() > 1 && (lastCards[(currentPlayer + 1) % 2] == null || card.getSpeed() >= lastCards[(currentPlayer + 1) % 2].getSpeed())) &&
                             Action.canEffectBeActivatedForCard(this, card, lastCards[(currentPlayer + 1) % 2]) && !chainContainsPair(card, lastCards[(currentPlayer + 1) % 2])) {
                         duelMenu.printCurrentPlayerTurn();
-                        if (isAI || GameView.doesUserWantToUseEffectOfCard(card)) {
+                        if (users[currentPlayer].isAI() || GameView.doesUserWantToUseEffectOfCard(card)) {
                             isPlayerDone[(currentPlayer + 1) % 2] = false;
                             chain.add(new Card[]{card, lastCards[(currentPlayer + 1) % 2]});
                             lastCards[(currentPlayer) % 2] = card;

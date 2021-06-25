@@ -17,6 +17,7 @@ public class MagicCylinder extends Action{
     public void runActionForDefense(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
         opponentCard.setCanThisCardAttack(false);
+        if(myCard.getDamageToLpOfOpponent() == 0) return;
         gameController.increaseLp(1 - myNumber, -opponentCard.getAttack());
     }
 

@@ -156,14 +156,10 @@ public class Board {
             return deckZone.get(size - 1);
         }
         if(place.startsWith("5")){
-            int size = fieldZone.size();
-            if(size == 0) return null;
-            return fieldZone.get(size - 1);
+            return fieldZone.get(0);
         }
         if(place.startsWith("hand")){
             int secondPlace = Integer.parseInt(place.substring(5));
-            int size = cardsInHand.size();
-            if(size == 0) return null;
             return cardsInHand.get(secondPlace - 1);
         }
         return null;

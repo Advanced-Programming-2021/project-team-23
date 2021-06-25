@@ -37,7 +37,7 @@ public class Card {
     private Card chosenRitualMonsterForRitualSpell; // used for advanced ritual art
 
     private String mode;  // examples : OO, DH, DO
-    private String place;   // examples: 1_5, 2_2, 3, 4, 5, hand_6
+    private String place;   // examples: 1_5, 2_2, 3_1, 4, 5, hand_6
 
     private boolean canAnyoneAttack; //set to true again after any use of the value
     private boolean canBeDestroyed;
@@ -104,6 +104,7 @@ public class Card {
                         setTypesOfMonstersWithDefenseToBeIncreasedDueToEquipSpell(row[7]);
                     }
                     speed = 1;
+                    if(type.startsWith("Spell_Continuous") && !name.equals("Supply Squad")) speed = 2;
                     if(type.startsWith("Spell_Quick-play")) speed = 2;
                     if(type.startsWith("Trap")) speed = 2;
                     if(type.startsWith("Trap_Counter")) speed = 3;

@@ -112,10 +112,9 @@ public class AI{
 
     private void setOrSummon() {
         CommandController commandController = new CommandController(gameController);
-        Card card = selectMonsterFromHand();
-        if(card == null) return;
+        selectMonsterFromHand();
         if(gameController.selectedCard.getAttack() > gameController.selectedCard.getDefense() &&
-                gameController.selectedCard.getAttack() >= 800){
+                gameController.selectedCard.getAttack() > 600){
             try { commandController.summon(); } catch (Exception e) { }
         } else {
             try { commandController.set(); } catch (Exception e) { }
@@ -171,7 +170,7 @@ public class AI{
         int maxDefense = 0;
         Card bestCard = null;
         for(Card card: arrayList){
-            if(card != null && card.isMonster() && card.getAttack() > maxDefense){
+            if(card != null && card.isMonster() && card.getDefense() > maxDefense){
                 bestCard = card;
                 maxDefense = card.getAttack();
             }

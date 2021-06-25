@@ -18,8 +18,9 @@ public class RingOfDefense extends Action{
     @Override
     public boolean canEffectBeActivated(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
-        return gameController.lastCards[1 - myNumber] != null &&
-                gameController.lastCards[1 - myNumber].getType().startsWith("Trap");
+        return opponentCard != null &&
+                gameController.lastCards[1 - myNumber] != null &&
+                gameController.lastCards[1 - myNumber].isTrap();
     }
 }
 

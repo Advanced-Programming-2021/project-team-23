@@ -13,7 +13,7 @@ public class MysticalSpaceTyphoon extends Action {
     public void runFirstAction(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
         ArrayList<Card> spellsAndTrapsToBeDestroyed = CardController.getSomeCardsFromZone(opponentBoard, 2, "1");
-        if(!gameController.isAI) spellsAndTrapsToBeDestroyed = GameView.
+        if(!gameController.users[myNumber].isAI()) spellsAndTrapsToBeDestroyed = GameView.
                 getCardsByAddressFromZone(opponentBoard, 2, "1");
         CardController.moveCardToGraveyard(opponentBoard, spellsAndTrapsToBeDestroyed.get(0));
     }

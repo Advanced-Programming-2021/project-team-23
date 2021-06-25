@@ -20,7 +20,7 @@ public class MagicJammer extends Action{
     public void runActionForDefense(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
         int number = 1;
-        if(!gameController.isAI) number = GameView.getACardNumberInHandFromUser(myBoard);
+        if(!gameController.users[myNumber].isAI()) number = GameView.getACardNumberInHandFromUser(myBoard);
         Card cardToBeDestroyed = myBoard.getCardsInHand().get(number - 1);
         CardController.moveCardToGraveyard(myBoard, cardToBeDestroyed);
         CardController.moveCardToGraveyard(opponentBoard, opponentCard);

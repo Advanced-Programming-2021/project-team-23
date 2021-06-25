@@ -13,11 +13,14 @@ public class Terraforming extends Action{
     public void runFirstAction(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
         ArrayList<Card> deckZone = myBoard.getDeckZone();
+        Card cardToAdd = null;
         for(Card card : deckZone){
             if(card != null && card.getType().startsWith("Spell_Field")) {
-                CardController.addCardToHandFromDeck(myBoard, card);
+                cardToAdd = card;
+                break;
             }
         }
+        if(cardToAdd != null) CardController.addCardToHandFromDeck(myBoard, cardToAdd);
     }
 
     @Override

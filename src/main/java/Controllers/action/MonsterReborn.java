@@ -14,7 +14,7 @@ public class MonsterReborn extends Action{
     public void runFirstAction(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
         Card card;
-        if(gameController.isAI) {
+        if(gameController.users[myNumber].isAI()) {
             card = CardController.getAMonsterFromGraveyard(opponentBoard);
             if(card == null) card = CardController.getAMonsterFromGraveyard(myBoard);
         }

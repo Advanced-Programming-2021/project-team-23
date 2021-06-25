@@ -22,7 +22,7 @@ public class AdvancedRitualArt extends Action{
 
         CardController.moveCardFromFirstArrayToSecondArray(ritualMonster, myBoard.getCardsInHand(), myBoard.getMonsters(), "1");
         myCard.setMode("OO");
-        if(!gameController.isAI && GameView.doesPlayerWantToSetCardInDefensiveMode()){
+        if(!gameController.users[myNumber].isAI() && GameView.doesPlayerWantToSetCardInDefensiveMode()){
             myCard.setMode("DO");
         }
     }

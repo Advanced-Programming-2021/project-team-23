@@ -163,7 +163,7 @@ public class CommandController {
             if (!CardController.areThereEnoughCardsInMonsterZoneToTribute(gameController.getBoard(gameController.getCurrentPlayer()), numberOfTributes)) {
                 throw new Exception("there are not enough cards for tribute");
             }
-            if(gameController.isAI){
+            if(gameController.users[gameController.currentPlayer].isAI()){
                 for(int i = 0; i < numberOfTributes; i++){
                     Card tribute = AI.getLowestAttackMonster(gameController.boards[gameController.currentPlayer].getMonsters());
                     CardController.moveCardToGraveyard(gameController.getBoard(gameController.getCurrentPlayer()), tribute);

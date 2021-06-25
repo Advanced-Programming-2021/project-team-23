@@ -13,21 +13,19 @@ public class CardController {
         if (place.startsWith("1")) {
             int secondPlace = Integer.parseInt(place.substring(2));
             ArrayList<Card> monsters = board.getMonsters();
-            monsters.set(secondPlace, card);
-            board.setMonsters(monsters);
+            monsters.set(secondPlace - 1, card);
             if (card != null) card.setPlace(place);
         }
         if (place.startsWith("2")) {
             int secondPlace = Integer.parseInt(place.substring(2));
             ArrayList<Card> spellsAndTraps = board.getSpellsAndTraps();
-            spellsAndTraps.set(secondPlace, card);
-            board.setSpellsAndTraps(spellsAndTraps);
+            spellsAndTraps.set(secondPlace - 1, card);
             if (card != null) card.setPlace(place);
         }
         if (place.startsWith("3")) {
             ArrayList<Card> graveyard = board.getGraveyard();
             graveyard.add(card);
-            if (card != null) card.setPlace("3");
+            if (card != null) card.setPlace("3_" + graveyard.size());
         }
         if (place.startsWith("4")) {
             ArrayList<Card> deckZone = board.getDeckZone();

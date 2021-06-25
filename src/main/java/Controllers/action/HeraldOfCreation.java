@@ -16,12 +16,12 @@ public class HeraldOfCreation extends Action{
     public void runFirstAction(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
 
-        if(!gameController.isAI && !GameView.doesUserWantToUseEffectOfCard(myCard)) return;
+        if(!gameController.users[myNumber].isAI() && !GameView.doesUserWantToUseEffectOfCard(myCard)) return;
 
         Card card = getACardFromGraveyardWithLeastLevel(myBoard, 7);
 
         int number = 1;
-        if(!gameController.isAI) number = GameView.getACardNumberInHandFromUser(myBoard);
+        if(!gameController.users[myNumber].isAI()) number = GameView.getACardNumberInHandFromUser(myBoard);
         ArrayList<Card> cardsInHand = myBoard.getCardsInHand();
         Card cardToBeRemoved = cardsInHand.get(number - 1);
         CardController.moveCardToGraveyard(myBoard, cardToBeRemoved);

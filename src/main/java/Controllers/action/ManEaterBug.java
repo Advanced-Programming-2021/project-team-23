@@ -15,7 +15,7 @@ public class ManEaterBug extends Action{
     public void runFirstAction(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
         if(CardController.cardsOfArrayListAreAllNull(opponentBoard.getMonsters())) return;
-        if(!gameController.isAI) CardController.getAndDestroyMonstersInBoard(opponentBoard, 1);
+        if(!gameController.users[myNumber].isAI()) CardController.getAndDestroyMonstersInBoard(opponentBoard, 1);
         else {
             Card opponentMonster = AI.getHighestAttackMonster(opponentBoard.getMonsters());
             CardController.moveCardToGraveyard(opponentBoard, opponentMonster);

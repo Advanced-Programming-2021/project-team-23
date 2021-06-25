@@ -15,7 +15,7 @@ public class CallOfTheHaunted extends Action{
         ArrayList<Card> graveyard = myBoard.getGraveyard();
         ArrayList<Card> monsters = myBoard.getMonsters();
         Card monsterFromGraveyard;
-        if(gameController.isAI) monsterFromGraveyard = CardController.getAMonsterFromGraveyard(myBoard);
+        if(gameController.users[myNumber].isAI()) monsterFromGraveyard = CardController.getAMonsterFromGraveyard(myBoard);
         else monsterFromGraveyard = GameView.getMonstersFromGraveyard(myBoard, 1).get(0);
         CardController.moveCardFromFirstArrayToSecondArray(monsterFromGraveyard, graveyard, monsters, "1");
         monsterFromGraveyard.setMode("OO");

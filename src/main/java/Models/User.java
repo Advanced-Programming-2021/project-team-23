@@ -187,4 +187,8 @@ public class User{
         listOfDecks.add(deck);
     }
 
+    public boolean isAI(){
+        return this.username.equals("AI");
+    }
+
 }

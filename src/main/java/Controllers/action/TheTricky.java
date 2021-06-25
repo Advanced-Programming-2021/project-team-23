@@ -7,6 +7,8 @@ import Models.Card;
 import Views.GameView;
 
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class TheTricky extends Action {
 
@@ -21,7 +23,7 @@ public class TheTricky extends Action {
         myCard.setNumberOfTributesNeeded(0);
 
         int number = 1;
-        if(!gameController.isAI) number = GameView.getACardNumberInHandFromUser(myBoard);
+        if(!gameController.users[myNumber].isAI()) number = GameView.getACardNumberInHandFromUser(myBoard);
         ArrayList<Card> cardsInHand = myBoard.getCardsInHand();
         Card cardToBeRemoved = cardsInHand.get(number - 1);
         CardController.moveCardToGraveyard(myBoard, cardToBeRemoved);
@@ -36,7 +38,7 @@ public class TheTricky extends Action {
     public boolean canEffectBeActivated(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
         return myCard.getPlace().startsWith("hand") &&
-                myBoard.getCardsInHand().size() > 1 &&
+                myBoard.getCardsInHand().stream().filter(Objects::nonNull).collect(Collectors.toList()).size() > 1 &&
                 gameController.lastCards[myNumber] == myCard &&
                 gameController.lastActions[myNumber] != null &&
                 gameController.lastActions[myNumber].equals("summon") &&

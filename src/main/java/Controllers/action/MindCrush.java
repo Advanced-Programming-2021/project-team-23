@@ -15,7 +15,7 @@ public class MindCrush extends Action {
         setBoards(gameController, myCard);
         ArrayList<Card> opponentHand = opponentBoard.getCardsInHand();
         String cardName;
-        if(!gameController.isAI) cardName = GameView.getACardNameFromUser();
+        if(!gameController.users[myNumber].isAI()) cardName = GameView.getACardNameFromUser();
         else cardName = opponentHand.get(0).getName();
         if (CardController.arrayListContainsCardWithName(opponentHand, cardName)) {
             destroyAllCardInArrayWithName(opponentHand, cardName, opponentBoard);

@@ -26,7 +26,7 @@ public class Scanner extends Action{
 
             Card monster = null;
             if(!gameController.getBoard(gameController.getCurrentPlayer()).getMonsters().contains(myCard)) {
-                if(gameController.isAI) monster = CardController.getAMonsterFromGraveyard(opponentBoard);
+                if(gameController.users[myNumber].isAI()) monster = CardController.getAMonsterFromGraveyard(opponentBoard);
                 else monster = GameView.getMonstersFromGraveyard(opponentBoard, 1).get(0);
             }
             else{
