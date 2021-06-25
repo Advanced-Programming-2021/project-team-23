@@ -35,6 +35,14 @@ public class StartDuelMenu implements IMenu, ICheatCode {
                 System.out.println(user.username + " has no active deck");
                 return;
             }
+            if(!MainMenu.currentUser.activeDeck.isValid()){
+                System.out.println(MainMenu.currentUser.username + "'s deck is invalid");
+                return;
+            }
+            if(!user.activeDeck.isValid()){
+                System.out.println(user.username + "'s deck is invalid");
+                return;
+            }
             if(rounds != 1 && rounds != 3){
                 System.out.println("number of rounds is not supported");
                 return;
@@ -47,6 +55,10 @@ public class StartDuelMenu implements IMenu, ICheatCode {
         if(matcher.find()){
             if(MainMenu.currentUser.activeDeck == null){
                 System.out.println("you have no active deck");
+                return;
+            }
+            if(!MainMenu.currentUser.activeDeck.isValid()){
+                System.out.println("your deck is invalid");
                 return;
             }
             int rounds = Integer.parseInt(matcher.group(1));
@@ -72,5 +84,4 @@ public class StartDuelMenu implements IMenu, ICheatCode {
     public void increaseMoney(Matcher matcher) {
 
     }
-
 }

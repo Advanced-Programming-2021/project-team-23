@@ -26,7 +26,7 @@ public class DeckMenu implements IMenu , ICheatCode {
 
     public String processDeckCommands(String command, User user) throws Exception {
         if (command.matches("^menu show-current$")) {
-            return ("shop menu");
+            return ("deck menu");
         }
         Matcher matcher;
         matcher = getCommandMatcher(command, "deck create (.+)");
@@ -58,6 +58,7 @@ public class DeckMenu implements IMenu , ICheatCode {
                 throw new Exception("deck with name " + deckName + " does not exist");
             }
             deck.isActive = true;
+            user.activeDeck.isActive = false;
             user.activeDeck = deck;
             User.setUserInFile(user);
             return ("deck activated successfully!");
@@ -87,7 +88,7 @@ public class DeckMenu implements IMenu , ICheatCode {
                 throw new Exception("main deck is full");
             }
             int number = deck.getNumberOfCardByName(cardName);
-            if((card.getStatus().equals("Limited") && number == 1)
+            if((card.getStatus() != null && card.getStatus().equals("Limited") && number == 1)
                     || number == 3) {
                 throw new Exception("there are already " + number + " cards with name " + cardName + " in deck " + deckName);
             }
@@ -144,7 +145,7 @@ public class DeckMenu implements IMenu , ICheatCode {
             if(deck == null){
                 throw new Exception("deck with name " + deckName + " does not exist");
             }
-            DeckMenu.showDeck(user, deck, isSideDeck);
+            DeckMenu.showDeck(deck, isSideDeck);
             return null;
         }
         matcher = getCommandMatcher(command, "deck show cards");
@@ -169,7 +170,7 @@ public class DeckMenu implements IMenu , ICheatCode {
         }
     }
 
-    public static void showDeck(User user, Deck deck, boolean isSideDeck){
+    public static void showDeck(Deck deck, boolean isSideDeck){
         ArrayList<Card> deckCards;
         if(isSideDeck) deckCards = deck.sideDeck;
         else deckCards = deck.mainDeck;
@@ -178,8 +179,8 @@ public class DeckMenu implements IMenu , ICheatCode {
             if(card.isMonster()) monsters.add(card.getName() + ": " + card.getDescription());
             else spellsAndTraps.add(card.getName() + ": " + card.getDescription());
         }
-        String[] monstersArray = (String[]) monsters.toArray();
-        String[] spellsAndTrapsArray = (String[]) spellsAndTraps.toArray();
+        Object[] monstersArray = monsters.toArray();
+        Object[] spellsAndTrapsArray = spellsAndTraps.toArray();
         Arrays.sort(monstersArray);
         Arrays.sort(spellsAndTrapsArray);
         System.out.println("Deck: " + deck.name);
@@ -187,12 +188,12 @@ public class DeckMenu implements IMenu , ICheatCode {
         else System.out.println("Main deck:");
 
         System.out.println("Monsters:");
-        for(String string: monstersArray){
-            System.out.println(string);
+        for(Object object: monstersArray){
+            System.out.println((String) object);
         }
         System.out.println("Spell and Traps:");
-        for(String string: spellsAndTrapsArray){
-            System.out.println(string);
+        for(Object object: spellsAndTrapsArray){
+            System.out.println((String) object);
         }
     }
 
@@ -207,11 +208,11 @@ public class DeckMenu implements IMenu , ICheatCode {
         for(Card card: allCards){
             cardStrings.add(card.getName() + ": " + card.getDescription());
         }
-        String[] cardsArray = (String[]) cardStrings.toArray();
+        Object[] cardsArray = cardStrings.toArray();
         Arrays.sort(cardsArray);
 
-        for(String string: cardsArray){
-            System.out.println(string);
+        for(Object object: cardsArray){
+            System.out.println((String) object);
         }
     }
 

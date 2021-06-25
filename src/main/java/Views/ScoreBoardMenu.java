@@ -1,5 +1,6 @@
 package Views;
 
+import Controllers.AI;
 import Models.ICheatCode;
 import Models.User;
 import com.google.gson.Gson;
@@ -9,7 +10,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
+import java.util.stream.Collectors;
 
 public class ScoreBoardMenu implements IMenu , ICheatCode {
 
@@ -20,7 +24,7 @@ public class ScoreBoardMenu implements IMenu , ICheatCode {
             return;
         }
         if(command.equals("scoreboard show")){
-            ArrayList<User> users = sortUsers();
+            List<User> users = sortUsers();
             int rank = 1;
             for(int i = 0; i < users.size(); i++){
                 if(i > 0 && users.get(i).getScore() < users.get(i - 1).getScore()) rank++;
@@ -31,8 +35,8 @@ public class ScoreBoardMenu implements IMenu , ICheatCode {
         }
     }
 
-    public ArrayList<User> sortUsers() throws IOException {
-        ArrayList<User> users = User.getAllUsers();
+    public List<User> sortUsers() throws IOException {
+        List<User> users = User.getAllUsers().stream().filter(e -> !e.username.equals("AI")).collect(Collectors.toList());
         for(int i = 0; i < users.size() - 1; i++){
             for(int j = i + 1; j < users.size(); j++){
                 if((users.get(i).getScore() < users.get(j).getScore()) ||

@@ -464,7 +464,8 @@ public class CommandController {
         gameController.getSelectedCard().setIsEffectActive(true);
         gameController.getSelectedCard().setMode("O");
         Board board = gameController.getBoard(gameController.getCurrentPlayer());
-        if(gameController.getSelectedCard().getType().contains("Field") && gameController.getSelectedCard().getPlace().startsWith("hand")){
+        if(gameController.getSelectedCard().getType().contains("Field") &&
+                gameController.getSelectedCard().getPlace().startsWith("hand")){
             ArrayList<Card> fieldZone = board.getFieldZone();
             if(fieldZone.get(0) != null){
                 CardController.moveCardToGraveyard(board, fieldZone.get(0));

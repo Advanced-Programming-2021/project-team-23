@@ -69,7 +69,6 @@ public class RegisterMenu implements IMenu, ICheatCode {
             i = i + 1;
         }
 
-        //System.out.println(username);
 
         boolean uniqueUsername = checkUsernameExistenceForSignup(username);
         if (uniqueUsername) {
@@ -131,9 +130,6 @@ public class RegisterMenu implements IMenu, ICheatCode {
         return true;
     }
 
-    public static boolean checkPasswordStrength(String password){
-        return true;
-    }
 
     public static boolean verifyInformation(String username, String password) throws IOException {
         if(User.getUserByUsernameAndPassword(username, password) == null){

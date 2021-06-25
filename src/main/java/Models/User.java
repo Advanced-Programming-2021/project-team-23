@@ -154,15 +154,6 @@ public class User{
     }
 
 
-    public void changePassword(String newPassword) {
-
-    }
-
-    public void changeNickname(String newNickname) {
-
-    }
-
-
     public void fillCardsInNoDeck(){
         FileReader fileReader;
         String[] row;

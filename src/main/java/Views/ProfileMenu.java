@@ -67,7 +67,8 @@ public class ProfileMenu implements IMenu , ICheatCode {
             if(user.password.equals(newPassword)){
                 throw new Exception("please enter a new password");
             }
-
+            user.password = newPassword;
+            User.setUserInFile(user);
             return "password changed successfully";
         }
 

@@ -56,14 +56,16 @@ public class ShopMenu implements IMenu , ICheatCode {
         String[] row;
         ArrayList<Card> allCards = new ArrayList<>();
         try {
-            fileReader = new FileReader("D:\\project-team23\\src\\main\\resources\\Monster.csv");
+            fileReader = new FileReader(User.projectAddress + "\\src\\main\\resources\\Monster.csv");
             CSVReader csvReader = new CSVReader(fileReader);
             while((row = csvReader.readNext()) != null){
+                if(row[0].equals("Name")) continue;
                 allCards.add(new Card(row[0]));
             }
-            fileReader = new FileReader("D:\\project-team23\\src\\main\\resources\\SpellTrap.csv");
+            fileReader = new FileReader(User.projectAddress + "\\src\\main\\resources\\SpellTrap.csv");
             csvReader = new CSVReader(fileReader);
             while((row = csvReader.readNext()) != null){
+                if(row[0].equals("Name")) continue;
                 allCards.add(new Card(row[0]));
             }
         } catch (CsvValidationException | IOException e) {
