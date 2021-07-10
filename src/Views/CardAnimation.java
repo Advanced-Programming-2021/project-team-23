@@ -10,15 +10,22 @@ import javafx.util.Duration;
 public class CardAnimation {
 
 
-    public static void translate(ImageView imageView, CardCoordinates cardCoordinates1, CardCoordinates cardCoordinates2){
-//        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(500), imageView);
-//        translateTransition.setFromX(cardCoordinates1.x);
-//        translateTransition.setFromY(cardCoordinates1.y);
-//        translateTransition.setToX(cardCoordinates2.x);
-//        translateTransition.setToY(cardCoordinates2.y);
-//        translateTransition.play();
-        imageView.setLayoutX(cardCoordinates2.x);
-        imageView.setLayoutY(cardCoordinates2.y);
+    public ImageView imageView;
+    public CardCoordinates cardCoordinates1;
+    public CardCoordinates cardCoordinates2;
+
+    public CardAnimation(ImageView imageView, CardCoordinates cardCoordinates1, CardCoordinates cardCoordinates2) {
+        this.imageView = imageView;
+        this.cardCoordinates1 = cardCoordinates1;
+        this.cardCoordinates2 = cardCoordinates2;
+        this.setCycleDuration(Duration.millis(1000));
+        this.setCycleCount(1);
+    }
+
+    @Override
+    protected void interpolate(double v) {
+        imageView.setLayoutX(v * (cardCoordinates2.x - cardCoordinates1.x) + cardCoordinates1.x);
+        imageView.setLayoutY(v * (cardCoordinates2.y - cardCoordinates1.y) + cardCoordinates1.y);
     }
 
 }

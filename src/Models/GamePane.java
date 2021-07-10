@@ -179,7 +179,9 @@ public class GamePane extends Pane {
             cardCoordinates2.x -= CardLocation.smallDistance * board.getGraveyard().size();
             cardCoordinates2.y -= CardLocation.smallDistance * board.getGraveyard().size();
         }
-        CardAnimation.translate(card.currentImageView[playerNumber], cardCoordinates1, cardCoordinates2);
+        //CardAnimation.translate(card.currentImageView[playerNumber], cardCoordinates1, cardCoordinates2);
+        CardAnimation cardAnimation = new CardAnimation(card.currentImageView[playerNumber], cardCoordinates1, cardCoordinates2);
+        cardAnimation.play();
     }
 
 }
