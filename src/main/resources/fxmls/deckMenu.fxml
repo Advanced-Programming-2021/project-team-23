@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane prefHeight="455.0" prefWidth="695.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Views.RegisterMenu">
+   <children>
+      <Label layoutX="309.0" layoutY="36.0" text="Deck Menu">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <ListView layoutX="110.0" layoutY="112.0" prefHeight="208.0" prefWidth="262.0" />
+      <TextField layoutX="469.0" layoutY="320.0" prefHeight="25.0" prefWidth="111.0" />
+      <Button layoutX="438.0" layoutY="287.0" mnemonicParsing="false" onMouseClicked="#createNewDeck" text="create a new deck with name:" />
+      <Button layoutX="491.0" layoutY="118.0" mnemonicParsing="false" onMouseClicked="#editDeck" text="edit deck" />
+      <Button layoutX="485.0" layoutY="164.0" mnemonicParsing="false" onMouseClicked="#deleteDeck" text="delete deck" />
+      <Button layoutX="482.0" layoutY="212.0" mnemonicParsing="false" onMouseClicked="#activateDeck" text="activate deck" />
+      <Button layoutX="327.0" layoutY="373.0" mnemonicParsing="false" onMouseClicked="#back" text="back" />
+   </children>
+</Pane>

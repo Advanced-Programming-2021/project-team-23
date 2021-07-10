@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane prefHeight="469.0" prefWidth="689.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Views.RegisterMenu">
+   <children>
+      <TextField layoutX="260.0" layoutY="198.0" prefHeight="25.0" prefWidth="126.0" />
+      <TextField layoutX="336.0" layoutY="289.0" prefHeight="25.0" prefWidth="126.0" />
+      <TextField layoutX="336.0" layoutY="323.0" prefHeight="25.0" prefWidth="126.0" />
+      <Label layoutX="138.0" layoutY="100.0" text="username: " />
+      <Label layoutX="138.0" layoutY="168.0" text="nickname: " />
+      <Label layoutX="258.0" layoutY="293.0" text="old password:" />
+      <Label layoutX="258.0" layoutY="327.0" text="new password:" />
+      <Label layoutX="323.0" layoutY="24.0" text="Profile">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Button layoutX="132.0" layoutY="198.0" mnemonicParsing="false" onMouseClicked="#changeNickname" text="change nickname to:" />
+      <Button layoutX="132.0" layoutY="310.0" mnemonicParsing="false" onMouseClicked="#changePassword" text="change password" />
+      <Button layoutX="324.0" layoutY="413.0" mnemonicParsing="false" onMouseClicked="#back" text="back" />
+      <ImageView fitHeight="139.0" fitWidth="149.0" layoutX="457.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../Assets/Icons/help09_01_03_01a.dds.png" />
+         </image></ImageView>
+   </children>
+</Pane>

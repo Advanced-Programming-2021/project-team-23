@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Views.RegisterMenu">
+   <children>
+      <ListView layoutX="200.0" layoutY="115.0" prefHeight="200.0" prefWidth="200.0" />
+      <Label layoutX="262.0" layoutY="32.0" text="Scoreboard">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
+      <Button layoutX="280.0" layoutY="330.0" mnemonicParsing="false" onMouseClicked="#back" text="back" />
+      <Label layoutX="280.0" layoutY="98.0" text="nickname" />
+      <Label layoutX="364.0" layoutY="98.0" text="score" />
+      <Label layoutX="208.0" layoutY="98.0" text="number" />
+   </children>
+</Pane>

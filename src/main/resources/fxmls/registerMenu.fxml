@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Views.RegisterMenu">
+   <children>
+      <Label alignment="CENTER" layoutX="250.0" layoutY="21.0" prefHeight="29.0" prefWidth="100.0" text="Register Menu">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="usernameField" layoutX="226.0" layoutY="100.0" />
+      <TextField fx:id="nicknameField" layoutX="226.0" layoutY="175.0" />
+      <PasswordField fx:id="passwordField" layoutX="226.0" layoutY="253.0" />
+      <Label alignment="CENTER" layoutX="270.0" layoutY="83.0" prefHeight="17.0" prefWidth="61.0" text="username" />
+      <Label layoutX="275.0" layoutY="158.0" text="nickname" />
+      <Label layoutX="275.0" layoutY="236.0" text="password" />
+      <Button layoutX="316.0" layoutY="315.0" mnemonicParsing="false" onMouseClicked="#loginClicked" prefHeight="25.0" prefWidth="59.0" text="Login" />
+      <Button layoutX="226.0" layoutY="315.0" mnemonicParsing="false" onMouseClicked="#signupClicked" prefHeight="25.0" prefWidth="59.0" text="Signup" />
+   </children>
+</Pane>

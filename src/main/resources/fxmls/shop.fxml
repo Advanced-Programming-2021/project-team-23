@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane prefHeight="534.0" prefWidth="955.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Views.RegisterMenu">
+   <children>
+      <ImageView fitHeight="264.0" fitWidth="181.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true" />
+      <Label alignment="CENTER" layoutY="297.0" prefHeight="207.0" prefWidth="181.0" text="Label" wrapText="true" />
+      <Label layoutX="841.0" layoutY="62.0" text="Wallet: 0">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
+      <Label layoutX="846.0" layoutY="96.0" text="Price: 0">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
+      <Label layoutX="824.0" layoutY="131.0" text="Card Count: 0">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="807.0" layoutY="225.0" prefHeight="230.0" prefWidth="125.0" style="-fx-border-color: black;" text="drop cards here to buy" textFill="#727272" wrapText="true" />
+      <Label layoutX="455.0" layoutY="15.0" text="Shop">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Button layoutX="457.0" layoutY="492.0" mnemonicParsing="false" onMouseClicked="#back" text="back" />
+   </children>
+</Pane>

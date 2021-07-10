@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Views.RegisterMenu">
+   <children>
+      <Label layoutX="325.0" layoutY="22.0" prefHeight="27.0" prefWidth="101.0" text="Card Creator">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField layoutX="151.0" layoutY="153.0" />
+      <TextField layoutX="151.0" layoutY="195.0" />
+      <TextField layoutX="151.0" layoutY="238.0" />
+      <TextField layoutX="151.0" layoutY="284.0" />
+      <TextField layoutX="151.0" layoutY="325.0" />
+      <ListView layoutX="417.0" layoutY="141.0" prefHeight="236.0" prefWidth="242.0" />
+      <Label layoutX="199.0" layoutY="91.0" prefHeight="26.0" prefWidth="177.0" text="Price: 0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Button layoutX="300.0" layoutY="415.0" mnemonicParsing="false" text="Create Card" />
+      <Label layoutX="109.0" layoutY="157.0" text="Name" />
+      <Label layoutX="112.0" layoutY="199.0" text="Type" />
+      <Label layoutX="116.0" layoutY="288.0" text="Atk" />
+      <Label layoutX="116.0" layoutY="329.0" text="Def" />
+      <Label layoutX="112.0" layoutY="242.0" text="Level" />
+      <Label layoutX="521.0" layoutY="109.0" text="Effects">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button layoutX="397.0" layoutY="415.0" mnemonicParsing="false" onMouseClicked="#back" text="back" />
+   </children>
+</Pane>
