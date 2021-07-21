@@ -15,14 +15,15 @@ import java.util.regex.Pattern;
 
 public class StartDuelMenu implements IMenu, ICheatCode {
 
-    public static TextField username;
+    public static TextField numberOfRoundsTextField;
+    public boolean isFirstPlayer;
 
     @Override
     public void show() {
         try {
             Pane pane = FXMLLoader.load(getClass().getResource("/main/resources/fxmls/startDuel.fxml"));
             Main.stage.setScene(new Scene(pane));
-            username = (TextField) pane.getChildrenUnmodifiable().get(2);
+            numberOfRoundsTextField = (TextField) pane.getChildrenUnmodifiable().get(2);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -54,8 +55,11 @@ public class StartDuelMenu implements IMenu, ICheatCode {
             if(rounds != 1 && rounds != 3){
                 throw new Exception("number of rounds is not supported");
             }
-            GameController gameController = new GameController(MainMenu.currentUser, user, rounds);
-            gameController.runGameController(MainMenu.currentUser, user, rounds);
+            GameController gameController = new GameController(user, MainMenu.currentUser, rounds);
+            if(isFirstPlayer) gameController = new GameController(MainMenu.currentUser, user, rounds);
+            RegisterMenu.gameController = gameController;
+            gameController.phaseController(1);
+            //gameController.runGameController(MainMenu.currentUser, user, rounds);
             return;
         }
         matcher = getCommandMatcher(command, "duel new ai rounds ([\\d]+)");
@@ -84,6 +88,6 @@ public class StartDuelMenu implements IMenu, ICheatCode {
 
     @Override
     public void increaseMoney(Matcher matcher) {
-        
+
     }
 }

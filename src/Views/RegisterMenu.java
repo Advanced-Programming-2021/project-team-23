@@ -1,6 +1,7 @@
 package Views;
 
 import Controllers.GameController;
+import Controllers.Server;
 import Models.ICheatCode;
 import Models.User;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +25,7 @@ public class RegisterMenu implements IMenu, ICheatCode {
     public static PasswordField passwordField;
 
     public static GameController gameController;
+    public static User user;
 
     @Override
     public void show() {
@@ -34,25 +36,27 @@ public class RegisterMenu implements IMenu, ICheatCode {
 
     @Override
     public void processCommand(String command) throws Exception {
+
+    }
+
+    public User processRegisterCommand(String command) throws Exception {
         Pattern pattern = Pattern.compile("^user login (?:(?:(username [A-Za-z0-9]+) (password [A-Za-z0-9]+))|(?:(password [A-Za-z0-9]+) (username [A-Za-z0-9]+))|(?:(u [A-Za-z0-9]+) (p [A-Za-z0-9]+))|(?:(p [A-Za-z0-9]+) (u [A-Za-z0-9]+)))$");
         Matcher matcher = pattern.matcher(command);
         if (matcher.find()) {
-            login(matcher);
-            return;
+            return login(matcher);
         }
 
         pattern = Pattern.compile("^user create (?:(?:(username [A-Za-z0-9]+) (password [A-Za-z0-9]+) (nickname [A-Za-z0-9]+))|(?:(username [A-Za-z0-9]+) (nickname [A-Za-z0-9]+) (password [A-Za-z0-9]+))|(?:(password [A-Za-z0-9]+) (username [A-Za-z0-9]+) (nickname [A-Za-z0-9]+))|(?:(password [A-Za-z0-9]+) (nickname [A-Za-z0-9]+) (username [A-Za-z0-9]+))|(?:(nickname [A-Za-z0-9]+) (password [A-Za-z0-9]+) (username [A-Za-z0-9]+))|(?:(nickname [A-Za-z0-9]+) (username [A-Za-z0-9]+) (password [A-Za-z0-9]+))|(?:(u [A-Za-z0-9]+) (p [A-Za-z0-9]+) (n [A-Za-z0-9]+))|(?:(u [A-Za-z0-9]+) (n [A-Za-z0-9]+) (p [A-Za-z0-9]+))|(?:(p [A-Za-z0-9]+) (u [A-Za-z0-9]+) (n [A-Za-z0-9]+))|(?:(p [A-Za-z0-9]+) (n [A-Za-z0-9]+) (u [A-Za-z0-9]+))|(?:(n [A-Za-z0-9]+) (p [A-Za-z0-9]+) (u [A-Za-z0-9]+))|(?:(n [A-Za-z0-9]+) (u [A-Za-z0-9]+) (p [A-Za-z0-9]+)))$");
         matcher = pattern.matcher(command);
         if (matcher.find()) {
-            signup(matcher);
-            return;
+            return signup(matcher);
         }
 
         throw new Exception("invalid command");
     }
 
 
-    public void signup(Matcher matcher) throws Exception {
+    public User signup(Matcher matcher) throws Exception {
         String username = null;
         String password = null;
         String nickname = null;
@@ -83,15 +87,13 @@ public class RegisterMenu implements IMenu, ICheatCode {
         if (uniqueUsername) {
             boolean uniqueNickname = checkNicknameExistenceForSignup(nickname);
             if (uniqueNickname) {
-                IMenu.showSuccess("registered successfully");
-                User newUser = new User(username, password, nickname);
-                MainMenu mainMenu = new MainMenu(newUser);
-                mainMenu.show();
+                return new User(username, password, nickname);
             }
         }
+        return null;
     }
 
-    public void login(Matcher matcher) throws Exception {
+    public User login(Matcher matcher) throws Exception {
 
         String username = null;
         String password = null;
@@ -114,11 +116,9 @@ public class RegisterMenu implements IMenu, ICheatCode {
 
         boolean checkUser = verifyInformation(username, password);
         if (checkUser) {
-            //IMenu.showSuccess("logged in successfully");
-            User loggedInUser = getUserInstanceForLogin(username, password);
-            MainMenu mainMenu = new MainMenu(loggedInUser);
-            mainMenu.show();
+            return getUserInstanceForLogin(username, password);
         }
+        return null;
     }
 
 
@@ -159,23 +159,51 @@ public class RegisterMenu implements IMenu, ICheatCode {
     }
 
     public void signupClicked(MouseEvent mouseEvent) {
+        String string = "user create u " + usernameField.getText() + " p " + passwordField.getText() + " n " + nicknameField.getText();
+        String result;
         try {
-            String string = "user create u " + usernameField.getText() + " p " + passwordField.getText() + " n " + nicknameField.getText();
-            //System.out.println(string);
-            processCommand(string);
-        } catch (Exception e) {
-            IMenu.showErrorAlert(e.getMessage());
-            //e.printStackTrace();
+            result = Main.getResult(string);
+            if(result.equals("")) {
+                IMenu.showSuccess("registered successfully");
+                user = User.getUserByUsername(usernameField.getText());
+                MainMenu mainMenu = new MainMenu(user);
+                mainMenu.show();
+            }
+            else IMenu.showErrorAlert(result);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+//        try {
+//            String string = "user create u " + usernameField.getText() + " p " + passwordField.getText() + " n " + nicknameField.getText();
+//            String result = Main.getResult(string);
+//            if(result.equals("")) IMenu.showSuccess("registered successfully");
+//            else IMenu.showErrorAlert(result);
+//        } catch (Exception e) {
+//            IMenu.showErrorAlert(e.getMessage());
+//            //e.printStackTrace();
+//        }
     }
 
     public void loginClicked(MouseEvent mouseEvent) {
+        String string = "user login u " + usernameField.getText() + " p " + passwordField.getText();
+        String result;
         try {
-            processCommand("user login u " + usernameField.getText() + " p " + passwordField.getText());
-        } catch (Exception e) {
-            IMenu.showErrorAlert(e.getMessage());
-            //e.printStackTrace();
+            result = Main.getResult(string);
+            if(result.equals("")) {
+                user = User.getUserByUsername(usernameField.getText());
+                MainMenu mainMenu = new MainMenu(user);
+                mainMenu.show();
+                //System.out.println(user.username);
+            }
+            else IMenu.showErrorAlert(result);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+//        try {
+//            processCommand("user login u " + usernameField.getText() + " p " + passwordField.getText());
+//        } catch (Exception e) {
+//            IMenu.showErrorAlert(e.getMessage());
+//        }
     }
 
 
@@ -207,6 +235,7 @@ public class RegisterMenu implements IMenu, ICheatCode {
 
     public void logout(MouseEvent mouseEvent) {
         try {
+            Main.getResult("logout");
             Pane pane = FXMLLoader.load(getClass().getResource("/main/resources/fxmls/registerMenu.fxml"));
             usernameField = (TextField) pane.getChildrenUnmodifiable().get(1);
             nicknameField = (TextField) pane.getChildrenUnmodifiable().get(2);
@@ -217,11 +246,11 @@ public class RegisterMenu implements IMenu, ICheatCode {
         }
     }
 
+
     public void createCard(MouseEvent mouseEvent) {
         CardCreatorMenu cardCreatorMenu = new CardCreatorMenu();
         cardCreatorMenu.show();
     }
-
 
 
 
@@ -268,7 +297,7 @@ public class RegisterMenu implements IMenu, ICheatCode {
     public void playWithAI(MouseEvent mouseEvent) {
         StartDuelMenu startDuelMenu = new StartDuelMenu();
         try {
-            startDuelMenu.processCommand("duel new ai rounds 1");
+            startDuelMenu.processCommand("duel new ai rounds " + StartDuelMenu.numberOfRoundsTextField.getText());
         } catch (Exception e) {
             IMenu.showErrorAlert(e.getMessage());
         }
@@ -277,7 +306,9 @@ public class RegisterMenu implements IMenu, ICheatCode {
     public void playWithAnotherUser(MouseEvent mouseEvent) {
         StartDuelMenu startDuelMenu = new StartDuelMenu();
         try {
-            startDuelMenu.processCommand("duel new second-player " + StartDuelMenu.username.getText() + " rounds 1");
+            String string = Main.getResult("duel " + StartDuelMenu.numberOfRoundsTextField.getText());
+            if(string.startsWith("0")) startDuelMenu.isFirstPlayer = true;
+            startDuelMenu.processCommand("duel new second-player " + string.substring(2) + " rounds " + StartDuelMenu.numberOfRoundsTextField.getText());
         } catch (Exception e) {
             IMenu.showErrorAlert(e.getMessage());
         }
@@ -285,9 +316,9 @@ public class RegisterMenu implements IMenu, ICheatCode {
 
 
     public void back(MouseEvent mouseEvent) {
+        endThreads();
         new MainMenu(MainMenu.currentUser).show();
     }
-
 
 
     public void editDeck(MouseEvent mouseEvent) {
@@ -405,5 +436,24 @@ public class RegisterMenu implements IMenu, ICheatCode {
 
     public void showGraveyard1(MouseEvent mouseEvent) {
         gameController.duel.showGraveyard(1);
+    }
+
+
+
+    public void enterLobby(MouseEvent mouseEvent) {
+        ChatRoom.user = MainMenu.currentUser;
+        ChatRoom chatRoom = new ChatRoom();
+        chatRoom.show();
+    }
+
+
+    private void endThreads() {
+
+    }
+
+
+    public void watchTVClicked(MouseEvent mouseEvent) {
+        TV tv = new TV();
+        tv.show();
     }
 }

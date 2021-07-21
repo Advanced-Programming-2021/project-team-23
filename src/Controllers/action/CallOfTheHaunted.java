@@ -19,6 +19,7 @@ public class CallOfTheHaunted extends Action{
             monsterFromGraveyard = CardController.getAMonsterFromGraveyard(myBoard);
         //}
         //else monsterFromGraveyard = GameView.getMonstersFromGraveyard(myBoard, 1).get(0);
+        graveyard.remove(monsterFromGraveyard);
         CardController.moveCardFromFirstArrayToSecondArray(monsterFromGraveyard, graveyard, monsters, "1");
         monsterFromGraveyard.setMode("OO");
     }

@@ -185,7 +185,8 @@ public class CardController {
                 board.getSpellsAndTraps().contains(card) ||
                 board.getFieldZone().contains(card) ||
                 board.getCardsInHand().contains(card) ||
-                board.getDeckZone().contains(card));
+                board.getDeckZone().contains(card) ||
+                board.getGraveyard().contains(card));
     }
 
     public static boolean areThereEnoughCardsInMonsterZoneToTribute(Board board, int number) {

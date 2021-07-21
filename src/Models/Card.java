@@ -22,7 +22,7 @@ public class Card {
             e.printStackTrace();
         }
     }
-
+    
     private String type;  // examples: Monster_Warrior, Spell_Field, Trap
     private String monsterType;
     private String cardType;
@@ -67,59 +67,68 @@ public class Card {
         this.name = name;
         canAnyoneAttack = true;
         canBeDestroyed = !name.equals("Marshmallon");
-        try {
-            FileReader fileReader = new FileReader(User.projectAddress + "\\src\\main\\resources\\Monster.csv");
-            CSVReader csvReader = new CSVReader(fileReader);
-            String[] row;
-            while((row = csvReader.readNext()) != null){
-                if(row[0].equals(name)){
-                    level = Integer.parseInt(row[1]);
-                    attribute = row[2];
-                    monsterType = row[3];
-                    cardType = row[4];
-                    type = "Monster_" + monsterType + "_" + cardType;
-                    attack = Integer.parseInt(row[5]);
-                    defense = Integer.parseInt(row[6]);
-                    description = row[7];
-                    price = Integer.parseInt(row[8]);
-                    numberOfTributesNeeded = Integer.parseInt(row[9]);
-                    speed = 1;
-                    if(name.equals("Suijin") || name.equals("Texchanger")) speed = 2;
-                    setIsNormalMonsterByName(name);
-                    canThisCardAttack = true;
+        String fileName;
+        for(int i = 0; i < 2; i++) {
+            if(i == 0) fileName = User.projectAddress + "\\src\\main\\resources\\Monster.csv";
+            else fileName = User.projectAddress + "\\src\\main\\resources\\newMonster.csv";
+            try {
+                FileReader fileReader = new FileReader(fileName);
+                CSVReader csvReader = new CSVReader(fileReader);
+                String[] row;
+                while ((row = csvReader.readNext()) != null) {
+                    if (row[0].equals(name)) {
+                        level = Integer.parseInt(row[1]);
+                        attribute = row[2];
+                        monsterType = row[3];
+                        cardType = row[4];
+                        type = "Monster_" + monsterType + "_" + cardType;
+                        attack = Integer.parseInt(row[5]);
+                        defense = Integer.parseInt(row[6]);
+                        description = row[7];
+                        price = Integer.parseInt(row[8]);
+                        numberOfTributesNeeded = Integer.parseInt(row[9]);
+                        speed = 1;
+                        if (name.equals("Suijin") || name.equals("Texchanger")) speed = 2;
+                        setIsNormalMonsterByName(name);
+                        canThisCardAttack = true;
+                    }
                 }
+            } catch (IOException | CsvValidationException e) {
+                e.printStackTrace();
             }
-        } catch (IOException | CsvValidationException e) {
-            e.printStackTrace();
         }
 
-        try {
-            FileReader fileReader = new FileReader(User.projectAddress + "\\src\\main\\resources\\SpellTrap.csv");
-            CSVReader csvReader = new CSVReader(fileReader);
-            String[] row;
-            while((row = csvReader.readNext()) != null){
-                if(row[0].equals(name)){
-                    type = row[1] + "_" + row[2];
-                    description = row[3];
-                    status = row[4];
-                    price = Integer.parseInt(row[5]);
-                    if(type.contains("Field")){
-                        setTypesOfMonstersWithAttackToBeIncreasedDueToAFieldSpell(row[6]);
-                        setTypesOfMonstersWithDefenseToBeIncreasedDueToAFieldSpell(row[7]);
+        for(int i = 0; i < 2; i++) {
+            if(i == 0) fileName = User.projectAddress + "\\src\\main\\resources\\SpellTrap.csv";
+            else fileName = User.projectAddress + "\\src\\main\\resources\\newSpellTrap.csv";
+            try {
+                FileReader fileReader = new FileReader(fileName);
+                CSVReader csvReader = new CSVReader(fileReader);
+                String[] row;
+                while ((row = csvReader.readNext()) != null) {
+                    if (row[0].equals(name)) {
+                        type = row[1] + "_" + row[2];
+                        description = row[3];
+                        status = row[4];
+                        price = Integer.parseInt(row[5]);
+                        if (type.contains("Field")) {
+                            setTypesOfMonstersWithAttackToBeIncreasedDueToAFieldSpell(row[6]);
+                            setTypesOfMonstersWithDefenseToBeIncreasedDueToAFieldSpell(row[7]);
+                        }
+                        if (type.contains("Equip")) {
+                            setTypesOfMonstersWithAttackToBeIncreasedDueToEquipSpell(row[6]);
+                            setTypesOfMonstersWithDefenseToBeIncreasedDueToEquipSpell(row[7]);
+                        }
+                        speed = 1;
+                        if (type.startsWith("Spell_Continuous") && !name.equals("Supply Squad")) speed = 2;
+                        if (type.startsWith("Spell_Quick-play")) speed = 2;
+                        if (type.startsWith("Trap")) speed = 2;
+                        if (type.startsWith("Trap_Counter")) speed = 3;
                     }
-                    if(type.contains("Equip")){
-                        setTypesOfMonstersWithAttackToBeIncreasedDueToEquipSpell(row[6]);
-                        setTypesOfMonstersWithDefenseToBeIncreasedDueToEquipSpell(row[7]);
-                    }
-                    speed = 1;
-                    if(type.startsWith("Spell_Continuous") && !name.equals("Supply Squad")) speed = 2;
-                    if(type.startsWith("Spell_Quick-play")) speed = 2;
-                    if(type.startsWith("Trap")) speed = 2;
-                    if(type.startsWith("Trap_Counter")) speed = 3;
                 }
+            } catch (IOException | CsvValidationException e) {
+                e.printStackTrace();
             }
-        } catch (IOException | CsvValidationException e) {
-            e.printStackTrace();
         }
 
         String cardFileName = Duel.assetsAddress + "\\Cards\\";
@@ -149,23 +158,26 @@ public class Card {
     }
 
     public static Card getCardByName(String name){
-        FileReader fileReader;
-        String[] row;
-        try {
-            fileReader = new FileReader(User.projectAddress + "\\src\\main\\resources\\Monster.csv");
-            CSVReader csvReader = new CSVReader(fileReader);
-            while((row = csvReader.readNext()) != null){
-                if(name.equals(row[0])) return new Card(row[0]);
-            }
-            fileReader = new FileReader(User.projectAddress + "\\src\\main\\resources\\SpellTrap.csv");
-            csvReader = new CSVReader(fileReader);
-            while((row = csvReader.readNext()) != null){
-                if(name.equals(row[0])) return new Card(row[0]);
-            }
-        } catch (CsvValidationException | IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+        Card card = new Card(name);
+        if(card.type == null) return null;
+        else return card;
+//        FileReader fileReader;
+//        String[] row;
+//        try {
+//            fileReader = new FileReader(User.projectAddress + "\\src\\main\\resources\\Monster.csv");
+//            CSVReader csvReader = new CSVReader(fileReader);
+//            while((row = csvReader.readNext()) != null){
+//                if(name.equals(row[0])) return new Card(row[0]);
+//            }
+//            fileReader = new FileReader(User.projectAddress + "\\src\\main\\resources\\SpellTrap.csv");
+//            csvReader = new CSVReader(fileReader);
+//            while((row = csvReader.readNext()) != null){
+//                if(name.equals(row[0])) return new Card(row[0]);
+//            }
+//        } catch (CsvValidationException | IOException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
     }
 
     public boolean isMonster(){

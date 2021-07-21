@@ -29,9 +29,10 @@ import java.util.stream.Collectors;
 public class Duel {
 
     public static String assetsAddress = User.projectAddress + "\\src\\Assets";
-    public GameController gameController;
+    public static GameController gameController;
     public static Scanner scanner;
     public static GamePane[] panes = new GamePane[2];
+    public static int screenIndex;
 
     public MediaPlayer[] mediaPlayers = new MediaPlayer[]{
     new MediaPlayer(new Media(getClass().getResource("/sounds/1.mp3").toExternalForm())),
@@ -43,11 +44,12 @@ public class Duel {
     };
 
     public Duel(GameController gameController){
-        this.gameController = gameController;
+        Duel.gameController = gameController;
         scanner = IMenu.scan;
     }
 
     public void setStages(){
+        screenIndex = 1;
         for(int i = 0; i < 2; i++){
             panes[i] = new GamePane(i, gameController);
             panes[i].initializeCards();
@@ -69,7 +71,7 @@ public class Duel {
             int finalI = i;
             mediaPlayers[i].setOnEndOfMedia(() -> mediaPlayers[(finalI + 1) % mediaPlayers.length].play());
         }
-        mediaPlayers[2].play();
+        mediaPlayers[4].play();
     }
 
     public void playDieSound(){

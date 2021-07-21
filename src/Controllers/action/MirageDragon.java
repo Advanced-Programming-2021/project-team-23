@@ -14,7 +14,7 @@ public class MirageDragon extends Action{
 
     public void runFirstAction(GameController gameController, Card myCard, Card opponentCard) {
         setBoards(gameController, myCard);
-        opponentBoard.setCanAnyTrapBeActivated(!myCard.getMode().endsWith("O"));
+        if(myCard.getMode() != null) opponentBoard.setCanAnyTrapBeActivated(!myCard.getMode().endsWith("O"));
     }
 
     public void runActionForDefense(GameController gameController, Card myCard, Card opponentCard) {

@@ -6,6 +6,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
+          <factory-entry name="project-team-23" />
           <factory-entry name="yu-gi-oh" />
         </datasource-mapping>
         <naming-strategy-map />

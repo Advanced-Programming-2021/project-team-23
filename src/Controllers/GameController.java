@@ -72,6 +72,7 @@ public class GameController {
         duel.setStages();
         currentPlayer = 0;
         phaseNumber = 1;
+        currentRound = 1;
     }
 
     public void runGameController(User user1, User user2, int numberOfRounds){

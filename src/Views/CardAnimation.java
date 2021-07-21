@@ -3,12 +3,14 @@ package Views;
 import Models.Card;
 import Models.CardCoordinates;
 import Models.CardLocation;
+import javafx.animation.Animation;
+import javafx.animation.Transition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Application;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-public class CardAnimation {
-
+public class CardAnimation extends Transition {
 
     public ImageView imageView;
     public CardCoordinates cardCoordinates1;
@@ -18,7 +20,7 @@ public class CardAnimation {
         this.imageView = imageView;
         this.cardCoordinates1 = cardCoordinates1;
         this.cardCoordinates2 = cardCoordinates2;
-        this.setCycleDuration(Duration.millis(1000));
+        this.setCycleDuration(Duration.millis(3000));
         this.setCycleCount(1);
     }
 
@@ -27,5 +29,4 @@ public class CardAnimation {
         imageView.setLayoutX(v * (cardCoordinates2.x - cardCoordinates1.x) + cardCoordinates1.x);
         imageView.setLayoutY(v * (cardCoordinates2.y - cardCoordinates1.y) + cardCoordinates1.y);
     }
-
 }

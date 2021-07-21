@@ -24,7 +24,6 @@ public class MainMenu implements IMenu , ICheatCode {
         try {
             Pane pane = FXMLLoader.load(getClass().getResource("/main/resources/fxmls/mainMenu.fxml"));
             Main.stage.setScene(new Scene(pane));
-
         } catch (IOException e) {
             e.printStackTrace();
         }

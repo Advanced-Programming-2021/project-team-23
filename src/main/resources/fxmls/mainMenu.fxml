@@ -4,20 +4,48 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Views.RegisterMenu">
+<Pane prefHeight="454.0" prefWidth="651.0" style="-fx-background-color: pink;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Views.RegisterMenu">
    <children>
-      <Label alignment="CENTER" layoutX="261.0" layoutY="23.0" prefHeight="24.0" prefWidth="78.0" text="Main Menu">
+      <Label alignment="CENTER" layoutX="280.0" layoutY="202.0" prefHeight="26.0" prefWidth="91.0" text="Main Menu">
          <font>
-            <Font size="15.0" />
+            <Font size="18.0" />
          </font>
       </Label>
-      <Button layoutX="258.0" layoutY="74.0" mnemonicParsing="false" onMouseClicked="#profileMenu" text="Profile Menu" />
-      <Button layoutX="262.0" layoutY="107.0" mnemonicParsing="false" onMouseClicked="#deckMenu" text="Deck Menu" />
-      <Button layoutX="278.0" layoutY="140.0" mnemonicParsing="false" onMouseClicked="#duelMenu" text="Duel" />
-      <Button layoutX="277.0" layoutY="175.0" mnemonicParsing="false" onMouseClicked="#shop" text="Shop" />
-      <Button layoutX="261.0" layoutY="208.0" mnemonicParsing="false" onMouseClicked="#scoreboard" text="Scoreboard" />
-      <Button layoutX="260.0" layoutY="241.0" mnemonicParsing="false" onMouseClicked="#createCard" text="Create Card" />
-      <Button layoutX="244.0" layoutY="274.0" mnemonicParsing="false" onMouseClicked="#importAndExport" text="Import and Export" />
-      <Button layoutX="269.0" layoutY="330.0" mnemonicParsing="false" onMouseClicked="#logout" text="Logout" />
+      <Button layoutX="430.0" layoutY="215.0" mnemonicParsing="false" onMouseClicked="#profileMenu" style="-fx-background-radius: 100;" text="Profile Menu">
+         <font>
+            <Font size="13.0" />
+         </font></Button>
+      <Button layoutX="408.0" layoutY="146.0" mnemonicParsing="false" onMouseClicked="#deckMenu" style="-fx-background-radius: 100;" text="Deck Menu">
+         <font>
+            <Font size="13.0" />
+         </font></Button>
+      <Button layoutX="260.0" layoutY="94.0" mnemonicParsing="false" onMouseClicked="#duelMenu" style="-fx-background-radius: 100;" text="Duel">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+      <Button layoutX="187.0" layoutY="134.0" mnemonicParsing="false" onMouseClicked="#shop" style="-fx-background-radius: 100;" text="Shop">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+      <Button layoutX="392.0" layoutY="286.0" mnemonicParsing="false" onMouseClicked="#scoreboard" style="-fx-background-radius: 100;" text="Scoreboard">
+         <font>
+            <Font size="13.0" />
+         </font></Button>
+      <Button layoutX="148.0" layoutY="203.0" mnemonicParsing="false" onMouseClicked="#createCard" style="-fx-background-radius: 100;" text="Create Card">
+         <font>
+            <Font size="13.0" />
+         </font></Button>
+      <Button layoutX="166.0" layoutY="274.0" mnemonicParsing="false" onMouseClicked="#importAndExport" style="-fx-background-radius: 100;" text="Import &amp; Export">
+         <font>
+            <Font size="13.0" />
+         </font></Button>
+      <Button layoutX="299.0" layoutY="341.0" mnemonicParsing="false" onMouseClicked="#logout" text="Logout">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+      <Button layoutX="348.0" layoutY="94.0" mnemonicParsing="false" onMouseClicked="#enterLobby" style="-fx-background-radius: 100;" text="Lobby">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
    </children>
 </Pane>
